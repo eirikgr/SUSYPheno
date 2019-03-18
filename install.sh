@@ -11,6 +11,7 @@ cd $SUSYPHENO_PATH/SUSYHIT/
 make
 cd $SUSYPHENO_PATH/DARKSUSY/darksusy-5.1.1/
 ./configure
+sed -i -- 's/higgsbounds d/d/g' makefile
 make
 #make install
 cd $SUSYPHENO_PATH
