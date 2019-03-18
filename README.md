@@ -4,6 +4,7 @@ The core code is written by Børge Kile Gjelsten and modified/extended by Eirik 
 ## First time set up do
 ```
 git clone https://github.com/eirikgr/SUSYPheno.git
+cd SUSYPheno
 source install.sh
 ```
 ## Every time you start a new terminal
