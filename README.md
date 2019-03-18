@@ -1,6 +1,13 @@
 # SUSYPheno
 A program for doing scans of pMSSM models taking into account constraints from various measurements. 
 The core code is written by Børge Kile Gjelsten and modified/extended by Eirik Gramstad.
+
+## Prerequisites
+```
+python2.x
+
+```
+
 ## First time set up do
 ```
 git clone https://github.com/eirikgr/SUSYPheno.git
