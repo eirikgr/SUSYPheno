@@ -1,0 +1,40 @@
+# Makefile for ucmh directory
+# Author: Pat Scott p.scott@imperial.ac.uk
+
+# Define fortran compiler and options (set when ./configure is run
+# in the DarkSUSY root directory)
+FF=@F77@
+FOPT=@FOPT@
+
+FC=$(FF)
+FFLAGS=$(FOPT) -c -I$(DINC)
+
+# Dependencies and libraries
+DINC=../../include
+DOBJ=../../build
+
+INC_DEP = dshmcom.h dsucmh.h dslocal.h dsidtag.h dshacom.h dsprep.h dsmpconst.h
+
+vpath %.h $(DINC)
+
+SRC = \
+dspbh_init.f                    dsucmh_betaf16.f        dsucmh_f_generalised.f       dsucmh_fmax_gamma_diffuse.f     dsucmh_localmass.f              dsucmh_mvar_powerlaw_step.f \
+dspbh_limits.f                  dsucmh_betaf17.f        dsucmh_f_ng_feeder.f         dsucmh_fmax_gamma_exgalptsrc.f  dsucmh_mass_ptrans.f            dsucmh_numdens_ptrans.f     \
+dsucmh_alphaintegrand.f         dsucmh_betah15.f        dsucmh_f_ng_hierarchical.f   dsucmh_fmax_gamma_galptsrc.f    dsucmh_mathcalT.f               dsucmh_numerical_dens.f     \
+dsucmh_aontsq.f                 dsucmh_betah16.f        dsucmh_f_powerlaw.f          dsucmh_fmax_reion.f             dsucmh_midinf.f                 dsucmh_qromo.f              \
+dsucmh_beta_generalised.f       dsucmh_betaintegrand.f  dsucmh_f_powerlaw_running.f  dsucmh_init_profile.f           dsucmh_midpnt.f                 dsucmh_transfunc.f          \
+dsucmh_beta_powerlaw_running.f  dsucmh_deltahsq.f       dsucmh_f_powerlaw_step.f     dsucmh_initdens_ptrans.f        dsucmh_mvar_generalised.f       dsucmh_transfunc_rad.f      \
+dsucmh_beta_powerlaw_step.f     dsucmh_dmin.f           dsucmh_flux.f                dsucmh_jpntsrc.f                dsucmh_mvar_powerlaw_running.f  dsucmh_mass_cs.f            \
+dsucmh_f_cs.f                   dsageatz.f 
+
+OBJ = $(patsubst %.f,$(DOBJ)/%.o,$(SRC))
+
+OBJF = $(patsubst %.F,$(DOBJ)/%.o,$(SRC))
+
+all : $(OBJ) $(OBJF)
+
+$(DOBJ)/%.o : %.F $(INC_DEP)
+	$(FC) $(FFLAGS) $< -o $@
+
+$(DOBJ)/%.o : %.f $(INC_DEP)
+	$(FC) $(FFLAGS) $< -o $@
