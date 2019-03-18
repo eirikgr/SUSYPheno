@@ -1,4 +1,6 @@
 # SUSYPheno
+A program for doing scans of pMSSM models taking into account constraints from various measurements. 
+The core code is written by Børge Kile Gjelsten and modified/extended by Eirik Gramstad.
 ## First time set up do
 ```
 git clone https://github.com/eirikgr/SUSYPheno.git
@@ -9,7 +11,7 @@ source install.sh
 export SUSYPHENO_PATH=$PWD
 export PATH=$PATH:$SUSYPHENO_PATH/bin
 ```
-
+If you want to enable plotting you would also need to have ROOT installed ([ROOT Download Page](https://root.cern.ch/downloading-root))
 ## How to run the program
 In order to do the plotting you will need ROOT (see [ROOT Download Page](https://root.cern.ch/downloading-root) on how to install root). You can continue to do the parameter scans, but the plotting will not work if ROOT is not installed.
 
