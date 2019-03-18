@@ -12,6 +12,7 @@ make
 cd $SUSYPHENO_PATH/DARKSUSY/darksusy-5.1.1/
 ./configure
 make
+#make install
 cd $SUSYPHENO_PATH
 
 
