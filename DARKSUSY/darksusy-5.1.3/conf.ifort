@@ -1,2 +1,0 @@
-./configure FC=ifort FCFLAGS="-O -extend_source"
-
