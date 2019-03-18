@@ -5,8 +5,12 @@ The core code is written by Børge Kile Gjelsten and modified/extended by Eirik 
 ## Prerequisites
 ```
 python2.x
-
 ```
+One also need to install [pyslha](https://pypi.org/project/pyslha/). This can easilly be done using pip
+```
+pip install pyslha
+```
+If one does not want to istall *pyslha* one needs to comment out the corresponding import statement in bin/signalgrid_loop.py. Program seems to run fine without.
 
 ## First time set up do
 ```
