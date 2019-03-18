@@ -1,4 +1,4 @@
-import os, time
+import os, time, sys
 from slhafrompardict import slhafrompardict
 from kilelib import GetLinuxDist
 
@@ -37,14 +37,20 @@ def susyhit_execute_in_subdir(SUSYpar={}, par_steer={}, lha_in=[], fn_base_out='
 
     dist = GetLinuxDist()
 
+    if not 'SUSYPHENO_PATH' in os.environ.keys():
+        print "$SUSYPHENO_PATH not set. Exiting."
+        sys.exit()
+    susyphenopath = os.environ['SUSYPHENO_PATH']
+
+    susyhit_dir = susyphenopath+'/SUSYHIT/'
     # Make necessary links (NOTE: THESE INPUT FILES ARE JUST CONSTANTS, SO DO NOT AFFECT PARALLEL RUNNING)
-    if dist in ['RHEL5']: susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit'
+    #if dist in ['RHEL5']: susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit'
     # now works on both RHEL5 and RHEL6 (may have been just confusion)
     #susyhit_dir = '/net/abel-evs/cargo/fysepf/borgeg/alt/prog/RHEL6/susyhit/susyhit_newHDECAY'  # DDD
-    elif dist in ['RHEL6']: susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit_RHEL6'  # DDD
-    else:
-        susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit'
-        print 'Warning  susyhit_tool  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(dist)
+    #elif dist in ['RHEL6']: susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit_RHEL6'  # DDD
+    #else:
+    #    susyhit_dir = '/net/abel-evs/cargo/fysepf/epfshare/prog/susyhit'
+    #    print 'Warning  susyhit_tool  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(dist)
 
 
         

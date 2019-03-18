@@ -242,11 +242,17 @@ class micromegasTool:
         s.fn_warn = '%s/%s' %(s.dir1, 'warnings.txt')
         s.fn_report = '%s/%s' %(s.dir1, 'report')
 
-        if   s.d['dist'] in ['RHEL5']: s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas_3.5.5/MSSM'
-        elif s.d['dist'] in ['RHEL6']: s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas_3.5.5_RHEL6//micromegas_3.5.5/MSSM'   # inelegant structure
-        else:
-            s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas/micromegas_3.5.5/MSSM'  # default
-            print 'Warning  micromegasTool  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(s.d['dist'])
+        if not 'SUSYPHENO_PATH' in os.environ.keys():
+            print "$SUSYPHENO_PATH not set. Exiting."
+            sys.exit()
+        susyphenopath = os.environ['SUSYPHENO_PATH']
+
+        s.d['dir_exe'] = susyphenopath+'/MICROMEGA/micromegas_3.5.5/MSSM'
+        #if   s.d['dist'] in ['RHEL5']: s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas_3.5.5/MSSM'
+        #elif s.d['dist'] in ['RHEL6']: s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas_3.5.5_RHEL6//micromegas_3.5.5/MSSM'   # inelegant structure
+        #else:
+        #    s.d['dir_exe'] = '/net/abel-evs/cargo/fysepf/epfshare/prog/micromegas/micromegas_3.5.5/MSSM'  # default
+        #    print 'Warning  micromegasTool  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(s.d['dist'])
 
 
     # ##################################################### CLASS METHODS

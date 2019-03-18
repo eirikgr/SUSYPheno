@@ -262,12 +262,18 @@ fn_tagWith = []
 DIR_TMP = "/tmp"
 
 dist = GetLinuxDist()  # 2014-08-25  (added for RHEL6)
+
+if not 'SUSYPHENO_PATH' in os.environ.keys():
+    print "$SUSYPHENO_PATH not set. Exiting."
+    sys.exit()
+susyphenopath = os.environ['SUSYPHENO_PATH']
+DIR_DARKSUSY = susyphenopath+"/DARKSUSY/darksusy-5.1.1/test"  # RHEL5
 #if   dist in ['RHEL5']: DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy/darksusy-5.0.5/test"  # RHEL5
-if   dist in ['RHEL5']: DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy-5.0.5/test"  # RHEL5
-elif dist in ['RHEL6']: DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy-5.1.1_RHEL6/test"     # RHEL6
-else:
-    DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy/darksusy-5.0.5/test"
-    print 'Warning  darksusy  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(dist)
+#if   dist in ['RHEL5']: DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy-5.0.5/test"  # RHEL5
+#elif dist in ['RHEL6']: DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy-5.1.1_RHEL6/test"     # RHEL6
+#else:
+#    DIR_DARKSUSY = "/net/abel-evs/cargo/fysepf/epfshare/prog/darksusy/darksusy-5.0.5/test"
+#    print 'Warning  darksusy  non-recognised distribution: %s  (Proceeding as if RHEL5)' %(dist)
 
 # NOTE: 5.0.5 compiles on RHEL5 but not on RHEL6; 5.1.1 does the opposite   # 2014-08-25
 #             Hence: RHEL5 uses 5.0.5 while RHEL6 uses 5.1.1 (could be some very minor changes)

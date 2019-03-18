@@ -373,8 +373,13 @@ class signalgrid:
 
         s.configsetups = ['DGnoSL','DGstauR50','DGemtR50','DGemtR50noh','Higgs0.3','Higgs','hfunnelM1','AfunnelUpDS','AfunnelDownDS']
         s.configsetup = []  # Newest addition. Can control several things. For now only s.require
-        
-        s.darksusy_exe = '%s/bin/darksusy.py' %(s.HOME)
+
+        if not 'SUSYPHENO_PATH' in os.environ.keys():
+            print "$SUSYPHENO_PATH not set. Exiting."
+            sys.exit()
+        susyphenopath = os.environ['SUSYPHENO_PATH']
+
+        s.darksusy_exe = '%s/bin/darksusy.py' %(susyphenopath)
         s.fn_ds_script = 'script_darksusy_do.sh'
         s.ds_script = []
         s.ds_opt_cdmcoann = 1
