@@ -321,13 +321,13 @@ subroutine testBRSM(M)
    write(*,*)'calling the subroutines'
    write(*,*)'initialize_HiggsBounds and'
    write(*,*)'finish_HiggsBounds'
-   stop'error (see standard output for more info)'
+   stop 'error (see standard output for more info)'
   endif
 
   !if(M.gt.0.0D0)then
    !ok
   !else !M is negative or NaN
-  ! stop'wrong mass given to function'
+  ! stop 'wrong mass given to function'
   !endif
 end subroutine testBRSM
 !*********************************

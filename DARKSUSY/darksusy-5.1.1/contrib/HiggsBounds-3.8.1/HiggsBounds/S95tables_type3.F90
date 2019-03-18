@@ -249,7 +249,7 @@ module S95tables_type3
 
   ! checks we've filled the whole array
   if(x.ne.xend)then
-   stop'error in initializetables3 (a)'
+   stop 'error in initializetables3 (a)'
   endif
  
   do x=xbeg,xend
@@ -261,12 +261,12 @@ module S95tables_type3
    clsb_t3(x)%nx1     = nint((clsb_t3(x)%xmax1-clsb_t3(x)%xmin1)/clsb_t3(x)%sep1)+1
    clsb_t3(x)%nz      = nint((clsb_t3(x)%zmax -clsb_t3(x)%zmin )/clsb_t3(x)%zsep)+1
 
-   if(abs(clsb_t3(x)%sep1).lt.small)stop'problem in subroutine initializetables3 b1'
-   if(abs(clsb_t3(x)%sep2).lt.small)stop'problem in subroutine initializetables3 b2'
-   if(abs(clsb_t3(x)%zsep).lt.small)stop'problem in subroutine initializetables3 b3'
-   if(clsb_t3(x)%xmax1.lt.clsb_t3(x)%xmin1)stop'problem in subroutine initializetables3 b4'
-   if(clsb_t3(x)%xmax2.lt.clsb_t3(x)%xmin2)stop'problem in subroutine initializetables3 b5'
-   if(clsb_t3(x)%zmax .lt.clsb_t3(x)%zmin )stop'problem in subroutine initializetables3 b6'
+   if(abs(clsb_t3(x)%sep1).lt.small)stop 'problem in subroutine initializetables3 b1'
+   if(abs(clsb_t3(x)%sep2).lt.small)stop 'problem in subroutine initializetables3 b2'
+   if(abs(clsb_t3(x)%zsep).lt.small)stop 'problem in subroutine initializetables3 b3'
+   if(clsb_t3(x)%xmax1.lt.clsb_t3(x)%xmin1)stop 'problem in subroutine initializetables3 b4'
+   if(clsb_t3(x)%xmax2.lt.clsb_t3(x)%xmin2)stop 'problem in subroutine initializetables3 b5'
+   if(clsb_t3(x)%zmax .lt.clsb_t3(x)%zmin )stop 'problem in subroutine initializetables3 b6'
 
    !problem: can't set clsb_t3(x)%needs_M2_gt_2M1 here because it needs 
    !S95_t2
@@ -315,7 +315,7 @@ module S95tables_type3
    endif
   enddo
 
-  if(n.ne.1)stop'problem in function t3elementnumberfromid 1'
+  if(n.ne.1)stop 'problem in function t3elementnumberfromid 1'
 
  end function t3elementnumberfromid
 
@@ -335,49 +335,49 @@ module S95tables_type3
   !-------------------------------------------
 
   if(    t1%sep.eq.0)then
-    stop'problem in fill_t1dat_from_t3 (2a)'
+    stop 'problem in fill_t1dat_from_t3 (2a)'
   elseif(t1%nx.eq.0)then
-    stop'problem in fill_t1dat_from_t3 (2b)'
+    stop 'problem in fill_t1dat_from_t3 (2b)'
   elseif(nint((t1%xmax-t1%xmin)/t1%sep)+1.ne.t1%nx)then
-    stop'problem in fill_t1dat_from_t3 (2c)'
+    stop 'problem in fill_t1dat_from_t3 (2c)'
   endif
 
-  if(t1%sep.ne.t3%sep1)stop'problem in fill_t1dat_from_t3 (2d)'
+  if(t1%sep.ne.t3%sep1)stop 'problem in fill_t1dat_from_t3 (2d)'
 
-  if(ftype.lt.lbound(t3%dat,dim=3))stop'problem in fill_t1dat_from_t3 (2a)'
-  if(ftype.gt.ubound(t3%dat,dim=3))stop'problem in fill_t1dat_from_t3 (2b)'
+  if(ftype.lt.lbound(t3%dat,dim=3))stop 'problem in fill_t1dat_from_t3 (2a)'
+  if(ftype.gt.ubound(t3%dat,dim=3))stop 'problem in fill_t1dat_from_t3 (2b)'
 
-  if(zi.lt.lbound(t3%dat,dim=2))stop'problem in fill_t1dat_from_t3 (3a)'
-  if(zi.gt.ubound(t3%dat,dim=2))stop'problem in fill_t1dat_from_t3 (3b)'
+  if(zi.lt.lbound(t3%dat,dim=2))stop 'problem in fill_t1dat_from_t3 (3a)'
+  if(zi.gt.ubound(t3%dat,dim=2))stop 'problem in fill_t1dat_from_t3 (3b)'
   
-  if(ubound(t1%dat,dim=1).ne.t1%nx)stop'problem in fill_t1dat_from_t3 (5a)'
+  if(ubound(t1%dat,dim=1).ne.t1%nx)stop 'problem in fill_t1dat_from_t3 (5a)'
 
   select case(t3%type_of_assoc_table)
   case(1)
-    if(t1%xmin.lt.t3%xmin1)stop'problem in fill_t1dat_from_t3 (4a)'
-    if(t1%xmax.gt.t3%xmax1)stop'problem in fill_t1dat_from_t3 (4b)'
+    if(t1%xmin.lt.t3%xmin1)stop 'problem in fill_t1dat_from_t3 (4a)'
+    if(t1%xmax.gt.t3%xmax1)stop 'problem in fill_t1dat_from_t3 (4b)'
 
 
     ! at the moment, want t1%xmin, t1%xmax to correspond to points in t3
     ! can edit this later if needed
     if(abs((t1%xmin-t3%xmin1)/t3%sep1-dble(nint((t1%xmin-t3%xmin1)/t3%sep1))).gt.1.0D-3)then
-     stop'problem in fill_t1dat_from_t3 (6a)'
+     stop 'problem in fill_t1dat_from_t3 (6a)'
     endif
     if(abs((t1%xmax-t3%xmax1)/t3%sep1-dble(nint((t1%xmax-t3%xmax1)/t3%sep1))).gt.1.0D-3)then
-     stop'problem in fill_t1dat_from_t3 (6b)'
+     stop 'problem in fill_t1dat_from_t3 (6b)'
     endif
   case(2)
-    if(t1%xmin.lt.t3%xmin2)stop'problem in fill_t1dat_from_t3 (5a)'
-    if(t1%xmax.gt.t3%xmax2)stop'problem in fill_t1dat_from_t3 (5b)'
+    if(t1%xmin.lt.t3%xmin2)stop 'problem in fill_t1dat_from_t3 (5a)'
+    if(t1%xmax.gt.t3%xmax2)stop 'problem in fill_t1dat_from_t3 (5b)'
 
     if(abs((t1%xmin-t3%xmin2)/t3%sep2-dble(nint((t1%xmin-t3%xmin2)/t3%sep2))).gt.1.0D-3)then
-     stop'problem in fill_t1dat_from_t3 (5c)'
+     stop 'problem in fill_t1dat_from_t3 (5c)'
     endif
     if(abs((t1%xmax-t3%xmax2)/t3%sep2-dble(nint((t1%xmax-t3%xmax2)/t3%sep2))).gt.1.0D-3)then
-     stop'problem in fill_t1dat_from_t3 (5d)'
+     stop 'problem in fill_t1dat_from_t3 (5d)'
     endif
   case default
-    stop'problem in fill_t1dat_from_t3 (1a)'
+    stop 'problem in fill_t1dat_from_t3 (1a)'
   end select 
 
 
@@ -397,14 +397,14 @@ module S95tables_type3
     t1%dat(a,1)=t3%dat(ji,zi,ftype)
    enddo
 
-   if(a.ne.ubound(t1%dat,dim=1))stop'problem in fill_t1dat_from_t3 (10)'
+   if(a.ne.ubound(t1%dat,dim=1))stop 'problem in fill_t1dat_from_t3 (10)'
 
   case(2)
    !This would need extra arguments to the function, since one
    !of the masses would need to be kept constant
-   stop'problem in subroutine fill_t1dat_from_t3'
+   stop 'problem in subroutine fill_t1dat_from_t3'
   case default
-    stop'problem in fill_t1dat_from_t3 (1)'
+    stop 'problem in fill_t1dat_from_t3 (1)'
   end select 
 
  end subroutine fill_t1dat_from_t3
@@ -425,21 +425,21 @@ module S95tables_type3
   !-------------------------------------------
 
   if(lbound(zi_selection,dim=1).ne.lbound(slices_t2,dim=1))then
-    stop'problem in fill_slices_t2_from_slices_of_t3 1a'
+    stop 'problem in fill_slices_t2_from_slices_of_t3 1a'
   endif
   if(ubound(zi_selection,dim=1).ne.ubound(slices_t2,dim=1))then
-    stop'problem in fill_slices_t2_from_slices_of_t3 1b'
+    stop 'problem in fill_slices_t2_from_slices_of_t3 1b'
   endif
 
   do x=lbound(ftype_selection,dim=1),ubound(ftype_selection,dim=1)
-   if(ftype_selection(x).lt.lbound(t3%dat,dim=3))stop'problem in fill_slices_t2_from_slices_of_t3 3a'
-   if(ftype_selection(x).gt.ubound(t3%dat,dim=3))stop'problem in fill_slices_t2_from_slices_of_t3 3b'
+   if(ftype_selection(x).lt.lbound(t3%dat,dim=3))stop 'problem in fill_slices_t2_from_slices_of_t3 3a'
+   if(ftype_selection(x).gt.ubound(t3%dat,dim=3))stop 'problem in fill_slices_t2_from_slices_of_t3 3b'
   enddo
 
   do x=lbound(slices_t2,dim=1),ubound(slices_t2,dim=1)
 
-   if(zi_selection(x).lt.lbound(t3%dat,dim=2))stop'problem in fill_slices_t2_from_slices_of_t3 4a'
-   if(zi_selection(x).gt.ubound(t3%dat,dim=2))stop'problem in fill_slices_t2_from_slices_of_t3 4b'
+   if(zi_selection(x).lt.lbound(t3%dat,dim=2))stop 'problem in fill_slices_t2_from_slices_of_t3 4a'
+   if(zi_selection(x).gt.ubound(t3%dat,dim=2))stop 'problem in fill_slices_t2_from_slices_of_t3 4b'
 
 
    slices_t2(x)%id          =  t3%id    
@@ -470,7 +470,7 @@ module S95tables_type3
     case(0,1)
      itot=t3%nx1
     case default
-     stop'problem in fill_slices_t2_from_slices_of_t3 5'
+     stop 'problem in fill_slices_t2_from_slices_of_t3 5'
     end select
 
     do i=1,itot
@@ -481,7 +481,7 @@ module S95tables_type3
     enddo
    enddo 
 
-   if(ji.ne.size(t3%dat,dim=1))stop'problem in fill_slices_t2_from_slices_of_t3 6'
+   if(ji.ne.size(t3%dat,dim=1))stop 'problem in fill_slices_t2_from_slices_of_t3 6'
 
   enddo
 
@@ -559,7 +559,7 @@ module S95tables_type3
 
    if(n.ne.1)then
     write(*,*)'n=',n
-    stop'problem in readclsbfiles 1'
+    stop 'problem in readclsbfiles 1'
    endif
 
    a=0 !a labels the number of data points in entire table (spread over many files)
@@ -579,7 +579,7 @@ module S95tables_type3
    ! because of the file format: the first file is shorter than would be the case if the above expression 
    ! was correct
 
-   if(abs(deltaMhinfilename-nint(deltaMhinfilename)).gt.vsmall)stop'deltaMhinfilename must be approx an integer'
+   if(abs(deltaMhinfilename-nint(deltaMhinfilename)).gt.vsmall)stop 'deltaMhinfilename must be approx an integer'
 
    select case(clsb_t3(z)%type_of_assoc_table)
    case(1)
@@ -591,7 +591,7 @@ module S95tables_type3
     Mhinfilename_xmin=clsb_t3(z)%xmin2
     jmax=nint(deltaMhinfilename/dble(deltaMhinfilenamebits)/clsb_t3(z)%sep2)
    case default
-    stop'error in subroutine readclsbfiles'
+    stop 'error in subroutine readclsbfiles'
    end select
 
    allocate(imax(jmax))
@@ -609,7 +609,7 @@ module S95tables_type3
        imax(j)=int((Mhinfilename_initial+clsb_t3(z)%sep2*(j-1))*(clsb_t3(z)%xmax1/clsb_t3(z)%xmax2)/clsb_t3(z)%sep2)
       enddo
      case default
-      stop'error in subroutine readclsbfiles'
+      stop 'error in subroutine readclsbfiles'
      end select
   
      Mhbeg=  ( int( (Mhinfilename_initial)/deltaMhinfilename ) )*nint(deltaMhinfilename) 
@@ -637,7 +637,7 @@ module S95tables_type3
      Mhstringpart1=Mhbegstring//'_'//Mhendstring
      !write(*,*)'~'//Mhstringpart1//'~'
 
-     if(x.gt.9)stop'have not done this case yet'
+     if(x.gt.9)stop 'have not done this case yet'
      write(Mhdigit,'(I1)')x
      Mhstringpart2='_'//Mhdigit
 
@@ -677,17 +677,17 @@ module S95tables_type3
         !check Mh1_in,Mh2_in are as expected
         select case(clsb_t3(z)%type_of_assoc_table)
         case(1)
-          if(abs(Mh1_in-( Mhinfilename_initial + dble(i-1)*clsb_t3(z)%sep1)) .gt.0.0001D0 )stop'error: Mh1_in'
-          if(abs(Mh2_in-(clsb_t3(z)%xmin2 + dble(j-1)*clsb_t3(z)%sep2)) .gt.0.0001D0 )     stop'error: Mh2_in'
+          if(abs(Mh1_in-( Mhinfilename_initial + dble(i-1)*clsb_t3(z)%sep1)) .gt.0.0001D0 )stop 'error: Mh1_in'
+          if(abs(Mh2_in-(clsb_t3(z)%xmin2 + dble(j-1)*clsb_t3(z)%sep2)) .gt.0.0001D0 )     stop 'error: Mh2_in'
         case(2)
-          if(abs(Mh1_in-(clsb_t3(z)%xmin1 + dble(i-1)*clsb_t3(z)%sep1)) .gt.vsmall   )     stop'error: Mh1_in'
-          if(abs(Mh2_in-( Mhinfilename_initial + dble(j-1)*clsb_t3(z)%sep2)) .gt.0.0001D0 )stop'error: Mh2_in'
+          if(abs(Mh1_in-(clsb_t3(z)%xmin1 + dble(i-1)*clsb_t3(z)%sep1)) .gt.vsmall   )     stop 'error: Mh1_in'
+          if(abs(Mh2_in-( Mhinfilename_initial + dble(j-1)*clsb_t3(z)%sep2)) .gt.0.0001D0 )stop 'error: Mh2_in'
         case default
-          stop'error in subroutine readclsbfiles'
+          stop 'error in subroutine readclsbfiles'
         end select
 
         !check log10sf_in is as expected
-        if(  abs(log10sf_in-(clsb_t3(z)%zmin+clsb_t3(z)%zsep*dble(n-1))) .gt.0.0001D0 )stop'error: log10sf_in'
+        if(  abs(log10sf_in-(clsb_t3(z)%zmin+clsb_t3(z)%zsep*dble(n-1))) .gt.0.0001D0 )stop 'error: log10sf_in'
 #endif
 
         clsb_t3(z)%dat(b,n,clsb_t3_dat_3rdcol_clsb    )=clsb_in
@@ -709,7 +709,7 @@ module S95tables_type3
      if((n_csbfile-skip).ne.c)then
        write(*,*)'n_csbfile,skip=',n_csbfile,skip
        write(*,*)'c=',c
-       stop'error: n_csbfile,skip'
+       stop 'error: n_csbfile,skip'
      endif 
 #endif
     enddo
@@ -718,14 +718,14 @@ module S95tables_type3
    deallocate(imax)
 
 #ifdef checktables
-   if(abs(clsb_t3(z)%xmax2-Mh2_in).gt.vsmall)stop'error in clsb_t3(z)%xmax2'
+   if(abs(clsb_t3(z)%xmax2-Mh2_in).gt.vsmall)stop 'error in clsb_t3(z)%xmax2'
    if(abs(clsb_t3(z)%xmax1-Mh1_in).gt.vsmall)then
     write(*,*)'hello clsb_t3(z)%xmax1,Mh1_in',clsb_t3(z)%xmax1,Mh1_in
-    stop'error in clsb_t3(z)%xmax1'
+    stop 'error in clsb_t3(z)%xmax1'
    endif
-   if(abs(clsb_t3(z)%zmax-log10sf_in).gt.0.001)stop'error in clsb_t3(z)%zmax'
-   if((n_xy_combinations).ne.b)stop'error in n_xy_combinations'
-   if((n_xy_combinations*clsb_t3(z)%nz).ne.a)stop'error in n_xy_combinations*clsb_t3(z)%nz'
+   if(abs(clsb_t3(z)%zmax-log10sf_in).gt.0.001)stop 'error in clsb_t3(z)%zmax'
+   if((n_xy_combinations).ne.b)stop 'error in n_xy_combinations'
+   if((n_xy_combinations*clsb_t3(z)%nz).ne.a)stop 'error in n_xy_combinations*clsb_t3(z)%nz'
 #endif
 
    write(*,*)'finished reading in ',trim(filename(z))
@@ -739,7 +739,7 @@ module S95tables_type3
   integer :: z,n
   integer :: clsb_t3elementnumber_from_S95table
 
-  if(.not.(allocated(clsb_t3)))stop'error in function clsb_t3elementnumber_from_S95table'
+  if(.not.(allocated(clsb_t3)))stop 'error in function clsb_t3elementnumber_from_S95table'
 
   clsb_t3elementnumber_from_S95table=-1
 
@@ -752,7 +752,7 @@ module S95tables_type3
    endif
   enddo
 
-  if(n.gt.1)stop'error in function clsb_t3elementnumber_from_S95table'
+  if(n.gt.1)stop 'error in function clsb_t3elementnumber_from_S95table'
  
  end function clsb_t3elementnumber_from_S95table
  !*********************************************************** 
@@ -786,7 +786,7 @@ module S95tables_type3
   zbit=(log10sf-(dble(z-1)*t3%zsep+t3%zmin ))/t3%zsep
 
   if(max(ibit,jbit,zbit).gt.0.01D0)then ! Mj,Mi,log10sf are not on a data point
-    stop'bad input to function gett3dat'
+    stop 'bad input to function gett3dat'
   endif
 
   ji=0
@@ -800,7 +800,7 @@ module S95tables_type3
     case(0,1)
      itot=t3%nx1
     case default
-     stop'problem in function gett3dat'
+     stop 'problem in function gett3dat'
     end select
    endif
  

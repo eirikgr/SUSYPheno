@@ -69,7 +69,7 @@ module input
    !haven't yet set whichanalyses,whichinput
    infile1=''
   case default
-   stop'incorrect value for inputmethod'
+   stop 'incorrect value for inputmethod'
   end select
 
   !getting ndat and n_additional...
@@ -92,7 +92,7 @@ module input
      write(*,*)'Check that <prefix> was specified correctly'
      write(*,*)'and that file exists.'
      call flush(6)
-     stop'Problem opening file: see standard output for more info'
+     stop 'Problem opening file: see standard output for more info'
     endif
 
     ndat=getfilelength(f) ! number of data sets (i.e. lines) in input 
@@ -104,7 +104,7 @@ module input
     stem=stem_array(g)
     f=f_orig+g
     !the last element in stem_array should be 'additional'
-    if(trim(stem_array(g)).ne.'additional')stop'Error in subroutine setup_input (a)'
+    if(trim(stem_array(g)).ne.'additional')stop 'Error in subroutine setup_input (a)'
 
     required(g)=.False.
     open(f,file=trim(infile1)//trim(stem)//'.dat',status='old',action='read',iostat=ios)  
@@ -125,12 +125,12 @@ module input
    case('SLHA')
     ndat=1  ;  n_additional=0 
    case default
-    stop'error in subroutine do_input (1a)'
+    stop 'error in subroutine do_input (1a)'
    end select
   case('website','subrout')
    ndat=1   ;  n_additional=0
   case default
-   stop'error in subroutine do_input (1b)'
+   stop 'error in subroutine do_input (1b)'
   end select
   !...finished getting ndat and n_additional
 
@@ -183,12 +183,12 @@ module input
    case('SLHA') 
      n=1      
      if(ndat.ne.1)then
-       stop'error in subroutine do_input (4): need to specify infile1 for each SLHA file somehow'
+       stop 'error in subroutine do_input (4): need to specify infile1 for each SLHA file somehow'
      endif          
      call getSLHAdata(theo(n),g2(n),infile1)
      !call test_input(n)
    case default
-    stop'error in subroutine do_input (1)'
+    stop 'error in subroutine do_input (1)'
    end select
 
   case('website')   
@@ -198,7 +198,7 @@ module input
    if(webdebugmode) call test_input(n)
 
   case default
-   stop'error in subroutine do_input (3)'
+   stop 'error in subroutine do_input (3)'
   end select    
 
  end subroutine do_input
@@ -257,7 +257,7 @@ module input
    call fill('CP_values'                  ,   1,   1,   0,     1,    1,    1,    1,    0, 1,     1,    1) 
    call fill('additional'                 ,   1,   1,   1,     1,    1,    1,    1,    1, 1,     1,    1) 
 
-   if(n.ne.nt+1)stop'Error in subroutine fill_stem_array A'
+   if(n.ne.nt+1)stop 'Error in subroutine fill_stem_array A'
  
    !write(*,*)'hello whichinput',whichinput
    !write(*,*)'hello whichanalyses',whichanalyses
@@ -266,7 +266,7 @@ module input
    !do n=1,nt
    ! write(*,*)'hello ',stem_array(n),required(n)
    !enddo 
-   !stop'hello ending here for now'
+   !stop 'hello ending here for now'
 
 
    contains
@@ -293,7 +293,7 @@ module input
     case('effC')
      req= effC * req
     case default
-     stop'error in subroutine fill(whichinput)'
+     stop 'error in subroutine fill(whichinput)'
     end select
 
     select case(whichanalyses)
@@ -306,7 +306,7 @@ module input
     case('onlyP')
      req= onlyP * req
     case default
-     stop'error in subroutine fill(whichanalyses)'
+     stop 'error in subroutine fill(whichanalyses)'
     end select
 
     if(np(Hneut)==0)  req= Hneu  * req
@@ -320,7 +320,7 @@ module input
     case(1)
      required(n)=.True.
     case default
-     stop'error in subroutine fill(req)' 
+     stop 'error in subroutine fill(req)' 
     end select
    
     n=n+1
@@ -358,7 +358,7 @@ module input
 
     if(ios.ne.0)then
      call file_name_msg(f)
-     stop'problem opening file: see standard output for more info'
+     stop 'problem opening file: see standard output for more info'
     endif
 
    if((ndat.ne.getfilelength(f)))then
@@ -598,7 +598,7 @@ module input
      read(f,*)  nc, (theo(jj)%additional(i),i=1,n_additional)                 
     enddo 
   case default
-    stop'problem in subroutine readthefile (2)'
+    stop 'problem in subroutine readthefile (2)'
   end select 
   
   close(f)
@@ -713,7 +713,7 @@ module input
      write(*,*)'e.g.'
      write(*,*)' ./HiggsBounds LandH part 3 1 4 2 T ...'
     else
-     stop'error in subroutine command_line_how2'
+     stop 'error in subroutine command_line_how2'
     endif
    elseif(.not.official)then
     if(ubound(np,dim=1).eq.4)then
@@ -721,7 +721,7 @@ module input
      write(*,*)'e.g.'
      write(*,*)' ./HiggsBounds LandH part 3 1 4 2 mhmax'
     else
-     stop'error in subroutine command_line_how2'
+     stop 'error in subroutine command_line_how2'
     endif
    else !official, datfile
     write(*,*)' ./HiggsBounds whichanalyses whichinput nHneut nHplus prefix'
@@ -776,7 +776,7 @@ module input
   enddo
 
   if(sum(np).eq.0)then
-    stop'There should be a non-zero number of particles'
+    stop 'There should be a non-zero number of particles'
   endif
 
   if((inputmethod.eq.'datfile').and.(official))then
@@ -786,7 +786,7 @@ module input
          &//trim(adjustl(pdesc(x)%long))//'s must be zero'   
       write(*,*)'and you have entered the number',np(x)  
       write(*,*)'Please contact us if you would like more information.'
-      stop'error in subroutine check_number_of_particles (c) (see standard output for more info)'
+      stop 'error in subroutine check_number_of_particles (c) (see standard output for more info)'
      endif
     enddo
   endif
@@ -795,12 +795,12 @@ module input
     if((np(Hneut).lt.0).or.(np(Hneut).gt.5))then
       write(*,*)'If a SLHA file is used as input,'
       write(*,*)'number of neutral Higgs must be in the range 0:5'
-      stop'error in subroutine check_number_of_particles (d) (see standard output for more info)'
+      stop 'error in subroutine check_number_of_particles (d) (see standard output for more info)'
     endif
     if((np(Hplus).lt.0).or.(np(Hplus).gt.1))then
       write(*,*)'If a SLHA file is used as input,'
       write(*,*)'number of charged Higgs must be in the range 0:1'
-      stop'error in subroutine check_number_of_particles (e) (see standard output for more info)'
+      stop 'error in subroutine check_number_of_particles (e) (see standard output for more info)'
     endif
   endif
 
@@ -907,7 +907,7 @@ module input
    n = n + 1               
   enddo            
 
-  if(n.eq.0)stop'File is empty'
+  if(n.eq.0)stop 'File is empty'
       
   getfilelength=n
   rewind(fileid)
@@ -922,7 +922,7 @@ module input
 
   if(m.ne.n)then !checking that every line end in a newline character
     call file_name_msg(fileid)
-    stop'Error: file needs to end with a newline character (see standard output for filename)'
+    stop 'Error: file needs to end with a newline character (see standard output for filename)'
   endif
 
  end function getfilelength

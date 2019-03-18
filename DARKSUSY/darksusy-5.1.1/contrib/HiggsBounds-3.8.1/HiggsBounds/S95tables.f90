@@ -256,7 +256,7 @@ module S95tables
      delta_x_default(Hneut,c)=delta_Mh_LHC
      delta_x_default(Hplus,c)=delta_Mhplus_LHC
    else
-     stop'error in subroutine setup_S95tables'
+     stop 'error in subroutine setup_S95tables'
    endif
   enddo
 
@@ -309,29 +309,29 @@ module S95tables
 
   !we need tevXS_SM_functions to have a big enough range to cover the tables
   if(Exptrange_Mhmax_forSMXS(get_collider_element_number('TEV')).gt.tevXS_SM_functions_xmax)then
-   stop'need to extend upper range of tevXS_SM_functions or reduce delta_M_TEV'
+   stop 'need to extend upper range of tevXS_SM_functions or reduce delta_M_TEV'
   endif
 
   if(Exptrange_Mhmin_forSMXS(get_collider_element_number('TEV')).lt.tevXS_SM_functions_xmin)then
    write(*,*)Exptrange_Mhmin_forSMXS(get_collider_element_number('TEV')),tevXS_SM_functions_xmin
-   stop'need to extend lower range of tevXS_SM_functions'
+   stop 'need to extend lower range of tevXS_SM_functions'
   endif
 
   !we need lhc7XS_SM_functions to have a big enough range to cover the tables
   if(Exptrange_Mhmax_forSMXS(get_collider_element_number('LHC7')).gt.lhc7XS_SM_functions_xmax)then
-   stop'need to extend upper range of lhc7XS_SM_functions or reduce delta_M_LHC'
+   stop 'need to extend upper range of lhc7XS_SM_functions or reduce delta_M_LHC'
   endif
 
   if(Exptrange_Mhmin_forSMXS(get_collider_element_number('LHC7')).lt.lhc7XS_SM_functions_xmin)then
-   stop'need to extend lower range of lhc7XS_SM_functions'
+   stop 'need to extend lower range of lhc7XS_SM_functions'
   endif
   
   ! we need the branching ratios for all the colliders
   if(    maxval(Exptrange_Mhmax_forSMdecays).gt.BRSMt1Mhmax)then
-   stop'need to extend upper range of BRfunctions or reduce delta_M_(LEP/TEV)'
+   stop 'need to extend upper range of BRfunctions or reduce delta_M_(LEP/TEV)'
   elseif(minval(Exptrange_Mhmin_forSMdecays).lt.BRSMt1Mhmin)then
    write(*,*)'hello',minval(Exptrange_Mhmin_forSMdecays),BRSMt1Mhmin
-   stop'need to extend lower range of BRfunctions'
+   stop 'need to extend lower range of BRfunctions'
   endif
 
   deallocate(Expttables_Mhmin_forSMXS)
@@ -399,7 +399,7 @@ module S95tables
    endif
   enddo
 
-  if(y.ne.1)stop'problem in function get_collider_element_number'
+  if(y.ne.1)stop 'problem in function get_collider_element_number'
 
  end function get_collider_element_number
  !****************************************************************** 
@@ -1033,7 +1033,7 @@ module S95tables
      case(6227)
      axis_i=t%BR_hjtautau(jj) 
      case default 
-      stop'Problem in subroutine calcfact_t2 (y1)'
+      stop 'Problem in subroutine calcfact_t2 (y1)'
      end select
    else
      axis_i=Mi_av
@@ -1042,7 +1042,7 @@ module S95tables
    if(S95_t2(c)%particle_x2.eq.not_a_particle)then
      select case(S95_t2(c)%id)
      case default 
-       stop'Problem in subroutine calcfact_t2 (y2)'
+       stop 'Problem in subroutine calcfact_t2 (y2)'
      end select
    else
      axis_j=Mj_av
@@ -1111,7 +1111,7 @@ module S95tables
       test_appl=x 
      endif
     case default
-      stop'error in function test_appl'
+      stop 'error in function test_appl'
     end select              
 
   end function test_appl
@@ -1432,7 +1432,7 @@ module S95tables
   case default
    if(S95_t1(n)%deltax.gt.0.0D0)then
      write(*,*)'hello id=',id,'deltax=',S95_t1(n)%deltax
-     stop'error in subroutine model_likeness (1)'
+     stop 'error in subroutine model_likeness (1)'
    endif
   end select
 
@@ -2995,14 +2995,14 @@ module S95tables
 !--New model likeness check (TS 23/03/2012)
 !----------------------------------------------------------
   if(allocated(channel_rat)) then
-    if(nc.ne.ubound(channel_rat,dim=1))stop'error in subroutine model_likeness (3a)'
-    if(nc.ne.ubound(channel_SM,dim=1))stop'error in subroutine model_likeness (3a)'
+    if(nc.ne.ubound(channel_rat,dim=1))stop 'error in subroutine model_likeness (3a)'
+    if(nc.ne.ubound(channel_SM,dim=1))stop 'error in subroutine model_likeness (3a)'
 !   Check if the channels have been filled correctly
     do ic=1,nc    
-     if(abs(channel_rat(ic,1)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4a)'      
-     if(abs(channel_rat(ic,2)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4a)'         
-     if(abs(channel_SM(ic,1)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4a)'         
-     if(abs(channel_SM(ic,2)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4a)'         
+     if(abs(channel_rat(ic,1)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4a)'      
+     if(abs(channel_rat(ic,2)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4a)'         
+     if(abs(channel_SM(ic,1)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4a)'         
+     if(abs(channel_SM(ic,2)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4a)'         
     enddo
 !---Eliminate irrelevant channels (=channels with very small SM prediction).
 !---Construct mean value of the ratio for the relevant channels
@@ -3070,14 +3070,14 @@ module S95tables
 !-If channel_rat is not allocated, use old method:  
   else
 
-    if(ns.ne.ubound(XS_rat,dim=1))stop'error in subroutine model_likeness (3a)'
-    if(nb.ne.ubound(BR_rat,dim=1))stop'error in subroutine model_likeness (3b)'
+    if(ns.ne.ubound(XS_rat,dim=1))stop 'error in subroutine model_likeness (3a)'
+    if(nb.ne.ubound(BR_rat,dim=1))stop 'error in subroutine model_likeness (3b)'
 
     do is=1,ns    
-     if(abs(XS_rat(is)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4a)'
+     if(abs(XS_rat(is)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4a)'
     enddo
     do ib=1,nb    
-     if(abs(BR_rat(ib)-unset).lt.1.0D-3)stop'error in subroutine model_likeness (4b)'
+     if(abs(BR_rat(ib)-unset).lt.1.0D-3)stop 'error in subroutine model_likeness (4b)'
     enddo
   
     s=sum(XS_rat)/ns 
@@ -3176,7 +3176,7 @@ module S95tables
    double precision, intent(in) :: ft1_sep,vmasslower,vmasshigher,vmass_xmin,vmass_xmax,vmass_sep,valueoutsidetable
    type(table1) :: ft1
     
-    if(abs(vmass_xmin-vmass_xmax).lt.small)stop'problem in f_from_t3 (4)'
+    if(abs(vmass_xmin-vmass_xmax).lt.small)stop 'problem in f_from_t3 (4)'
     ft1%sep=ft1_sep
 
     ! we want f_t1%xmin to be lower  than x1lower
@@ -3218,7 +3218,7 @@ module S95tables
   !-------------------------------------------
 
   if(vmasslower.gt.vmasshigher)then
-    stop'problem in f_from_t1 (1)'
+    stop 'problem in f_from_t1 (1)'
   endif
 
   f_t1%id          =  t1%id  
@@ -3280,7 +3280,7 @@ module S95tables
   !-------------------------------------------
 
   if(vmasslower.gt.vmasshigher)then
-    stop'problem in f_from_t2 (1)'
+    stop 'problem in f_from_t2 (1)'
   endif
 
   if(abs(m1_at_ref_point_1-m1_at_ref_point_2).lt.small)then
@@ -3305,19 +3305,19 @@ module S95tables
 
   select case(vmassm1orm2)
   case(1)
-    if(const_m1)stop'problem in f_from_t2 (3a)'
+    if(const_m1)stop 'problem in f_from_t2 (3a)'
     vmass_xmin      =  t2%xmin1
     vmass_xmax      =  t2%xmax1
     vmass_sep       =  t2%sep1
     f_t1%sep        =  t2%sep1*sepmultfactor
   case(2)
-    if(const_m2)stop'problem in f_from_t2 (3b)'
+    if(const_m2)stop 'problem in f_from_t2 (3b)'
     vmass_xmin      =  t2%xmin2
     vmass_xmax      =  t2%xmax2
     vmass_sep       =  t2%sep2
     f_t1%sep        =  t2%sep2*sepmultfactor
   case default 
-    stop'problem in f_from_t2 (3)'
+    stop 'problem in f_from_t2 (3)'
   end select
 
   call fill_blank_ft1_dat(f_t1,f_t1%sep,vmasslower,vmasshigher,vmass_xmin,vmass_xmax,vmass_sep,valueoutsidetable) 
@@ -3415,7 +3415,7 @@ module S95tables
   double precision :: z_below,z_above
 
   if(vmasslower.gt.vmasshigher)then
-    stop'problem in f_from_slices_t2 (1)'
+    stop 'problem in f_from_slices_t2 (1)'
   endif
 
   if(abs(m1_at_ref_point_1-m1_at_ref_point_2).lt.small)then
@@ -3436,12 +3436,12 @@ module S95tables
     f_t1%deltax      =  slices_t2(1)%deltax
 
     if((slices_t2(1)%nx2.eq.1).or.(vmassm1orm2.eq.1))then
-       if(const_m1)stop'problem in f_from_slices_t2 (1a)'
+       if(const_m1)stop 'problem in f_from_slices_t2 (1a)'
        vmass_xmin      =  slices_t2(1)%xmin1
        vmass_sep       =  slices_t2(1)%sep1
        f_t1%sep        =  slices_t2(1)%sep1*sepmultfactor
     else
-       if(const_m2)stop'problem in f_from_slices_t2 (1b)'
+       if(const_m2)stop 'problem in f_from_slices_t2 (1b)'
        vmass_xmin      =  slices_t2(1)%xmin2
        vmass_sep       =  slices_t2(1)%sep2
        f_t1%sep        =  slices_t2(1)%sep2*sepmultfactor
@@ -3485,7 +3485,7 @@ module S95tables
        vmass_sep       =  slices_t2(1)%sep1
        f_t1%sep        =  slices_t2(1)%sep1*sepmultfactor
     else
-       if(const_m2)stop'problem in f_from_slices_t2 (3b)'
+       if(const_m2)stop 'problem in f_from_slices_t2 (3b)'
        vmass_xmin      =  slices_t2(1)%xmin2
        vmass_xmax      =  slices_t2(1)%xmax2
        vmass_sep       =  slices_t2(1)%sep2
@@ -3513,7 +3513,7 @@ module S95tables
             mass1 = (mass2 - line_const)/line_grad
           endif
        case default
-          stop'problem in f_from_slices_t2 (4b)'
+          stop 'problem in f_from_slices_t2 (4b)'
        end select
      endif
 
@@ -3561,7 +3561,7 @@ module S95tables
   double precision :: z_below,z_above
 
   if(vmasslower.gt.vmasshigher)then
-    stop'problem in f_from_t3 (1)'
+    stop 'problem in f_from_t3 (1)'
   endif
 
   if(abs(m1_at_ref_point_1-m1_at_ref_point_2).lt.small)then
@@ -3582,12 +3582,12 @@ module S95tables
     f_t1%deltax      =  t3%deltax
 
     if((t3%nx2.eq.1).or.(vmassm1orm2.eq.1))then
-       if(const_m1)stop'problem in f_from_t3 (1a)'
+       if(const_m1)stop 'problem in f_from_t3 (1a)'
        vmass_xmin      =  t3%xmin1
        vmass_sep       =  t3%sep1
        f_t1%sep        =  t3%sep1*sepmultfactor
     else
-       if(const_m2)stop'problem in f_from_t3 (1b)'
+       if(const_m2)stop 'problem in f_from_t3 (1b)'
        vmass_xmin      =  t3%xmin2
        vmass_sep       =  t3%sep2
        f_t1%sep        =  t3%sep2*sepmultfactor
@@ -3646,13 +3646,13 @@ module S95tables
   double precision :: dati,datiplus1
   !-------------------------------------------  
   if((datcomp.lt.lbound(t1%dat,dim=2)).or.(datcomp.gt.ubound(t1%dat,dim=2)))then
-   stop'wrong datcomp inputted to subroutine convolve_with_gaussian'
+   stop 'wrong datcomp inputted to subroutine convolve_with_gaussian'
   elseif(t1%nx.le.1)then
-   stop'wrong t1%nx inputted to subroutine convolve_with_gaussian (2)'
+   stop 'wrong t1%nx inputted to subroutine convolve_with_gaussian (2)'
   elseif(sigma.le.vsmall)then
-   stop'wrong sigma inputted to subroutine convolve_with_gaussian'
+   stop 'wrong sigma inputted to subroutine convolve_with_gaussian'
   elseif(abs(t1%sep).le.vsmall)then
-   stop'wrong t1%sep inputted to subroutine convolve_with_gaussian'
+   stop 'wrong t1%sep inputted to subroutine convolve_with_gaussian'
   endif
 
   big_number_instead_of_infinity=1.0D5
@@ -3667,7 +3667,7 @@ module S95tables
      ilow  = lbound(t1%dat,dim=1)
      ihigh = ubound(t1%dat,dim=1)
 
-     if(ilow.eq.ihigh)stop'problem in subroutine convolve_with_gaussian'
+     if(ilow.eq.ihigh)stop 'problem in subroutine convolve_with_gaussian'
 
      newsep=t1%sep/dble(divisions)
    
@@ -3766,7 +3766,7 @@ module S95tables
      case(2)  
        S95_t1_or_S95_t2_idfromelementnumber=S95_t2(tlist)%id
      case default
-       stop'wrong input to function S95_t1_or_S95_t2_idfromelementnumber'
+       stop 'wrong input to function S95_t1_or_S95_t2_idfromelementnumber'
      end select
  end function S95_t1_or_S95_t2_idfromelementnumber
  !************************************************************      
@@ -3785,7 +3785,7 @@ module S95tables
   case(2)
     S95_t1_or_S95_t2_elementnumberfromid= t2elementnumberfromid(S95_t2,id)
   case default
-    stop'problem with function S95_t1_or_S95_t2_elementnumberfromid'
+    stop 'problem with function S95_t1_or_S95_t2_elementnumberfromid'
   end select
 
  end function S95_t1_or_S95_t2_elementnumberfromid

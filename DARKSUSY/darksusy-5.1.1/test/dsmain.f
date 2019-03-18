@@ -25,7 +25,7 @@ c
       real*8 egam,dshrgacontdiff,egath,dshrgacont        ! gamma-ray flux
       real*8 tpbess(3),pb_a,pb_b,pb_c,dshrpbardiff       ! pbar flux
       real*8 eth,thmax,rateea,ratesu,energy,theta        ! neutrino telescopes
-      integer rtype,ptype                                ! neutrino telescopes
+      integer rtype                                      ! neutrino telescopes
       real*8 gm2amp,dsgm2muon                            ! g-2 amplitude
       integer unphys,excl,hwarning,acceptable,iend,ierr,iwar,nfc
       integer opt
@@ -33,22 +33,30 @@ c
      &  dshrdbardiff,dsepspecm
       real*8 amu,am2,ama,atanbe,amsq,atm,abm,
      &  am0,amhf,aa0,asgnmu
-      real*8 tkd,dsmhtkd,dsmhmcut,mcut
       character message*80
       character slhafile*128,slhaout*128
       integer modchoice
       logical first
       data first/.true./
 
+c     ----- ATLAS     
+      character line*80
+      character ATLASlha*128
+      real*8 oh2with
+      integer dooh2with
+      character accelbit*128
+      character acceltxt*128
+
 c
-c     Here we include the file dsmssm.h which contains common block
+c     Here we include the file dssusy.h which contains common block
 c     definitions for particle masses, susy parameters, and results.
 c     We also include dsidtag.h which gives the possibility to tag
 c     every model with a 12 character id tag (variable idtag). This
 c     id tag is printed in case of errors for that model.
 c
-      include 'dsmssm.h'
-      include 'dsio.h'
+      include 'dsmssm.h'    ! new
+      include 'dsio.h'      ! new
+c      include 'dssusy.h'   ! new
       include 'dsidtag.h'
 
 c
@@ -152,6 +160,36 @@ c     all these parameters are at the weak scale. See dsgive_model for
 c     an example of how these are assigned for MSSM-7.
 c
 
+c     SOME ATLAS INITIALISATIONS
+      dooh2with = 1
+      oh2with = -1.
+      unphys = 0
+      hwarning = 0
+      ATLASlha = 'ATLASlha'
+      write(*,*) "INFO ATLAS: ATLASlha = ",ATLASlha
+      !write(*,*) ATLASlha
+
+c ----- ATLAS: read steer file (minimal, minimal, only to automatise)
+      open (33,file='ATLASsteer',status='old')
+      read(33,*) modchoice  ! easier, but structure below can be expanded
+      read(33,*) dooh2with
+
+      write(*,*) "INFO ATLAS: modchoice = ",modchoice
+      write(*,*) "INFO ATLAS: dooh2with = ",dooh2with
+      if(modchoice.eq.4) goto 1010 ! skip interactive step
+
+
+
+c 10   read (unit,'(a)',end=99) line
+c      if (line(1:1).eq.'!'.or.line(1:1).eq.'#'.or.
+c     &  len(line).eq.0) goto 10
+c      if (line(1:1) == '4') then 
+c        modchoice = 4
+c        goto 1010  !skipping interactive step
+c      endif
+
+c ----- 
+
 
  1000 write(*,*) ' '
       write(*,*) 'What kind of model do you want to look at?'
@@ -161,6 +199,8 @@ c
       write(*,*) '   3 = as read from an SLHA2 file'
       read(5,*) modchoice
       if (modchoice.eq.0) goto 2000
+
+ 1010 continue
       
 c...MSSM
       if (modchoice.eq.1) then ! MSSM-7
@@ -213,6 +253,13 @@ c...for RGE running
          read(5,'(A)') slhafile
          call dsSLHAread(slhafile,0) ! 0=no warnings, 1=print warnings
 
+      elseif (modchoice.eq.4) then
+         write(*,*) 'Reading default SLHA2 file: ',ATLASlha
+         !read(slhafile,'(A)') ATLASlha
+         !slhafile = 'ATLASlha'
+         !call dsSLHAread(slhafile,0) ! 0=no warnings, 1=print warnings
+         call dsSLHAread(ATLASlha,0) ! 0=no warnings, 1=print warnings
+
       else
          write(*,*) 'Not a valid choice of model: ',modchoice
          stop
@@ -237,20 +284,20 @@ c
 c
       if (modchoice.eq.1) then
         call dssusy(unphys,hwarning)  ! MSSM-7 or any EW scale MSSM model
+
       elseif (modchoice.eq.2) then
         call dssusy_isasugra(unphys,hwarning) ! mSUGRA
-      elseif (modchoice.eq.3) then
+
+      elseif (modchoice.eq.3.or.modchoice.eq.4) then
 c...Note: For SLHA files, we should NOT call dssusy as we would then
 c...overwrite things read from the SLHA file. Hence, call dsprep directly.
-         call dsprep
+        call dsprep
         open (unit=30,file='dsmain1.tmp')
         write(30,*) ' '
         write(30,*) '***** MODEL: ',idtag,' *****'
         call dswspectrum(30)
         call dswvertx(30)
-        call dswwidth(30)
         close (30)
-
       endif
 
 
@@ -269,11 +316,16 @@ c     the available set of options. If you want to implement your own
 c     accelerator bounds, you can of course replace this call with one
 c     to your own routines instead.
 c
-      acceptable=0
       if (unphys.ne.0.or.hwarning.ne.0) then
          acceptable=-1
          excl=0
-         goto 150
+         !write(*,*)'here\n'
+         !if (unphys.lt.0) then
+         !  write(30,*) '---------- more on unphys'
+         !  call dswunph(30,unphys)
+         !endif
+
+         goto 150  !FIX
       endif
 
       call dsacbnd(excl)
@@ -298,7 +350,7 @@ c
       if (acceptable.ne.0) then
          call dswunph(6,unphys)
          call dswexcl(6,excl)
-         goto 1000 ! next model
+         !BKGgoto 1000 ! next model
       endif
       if (hwarning.ne.0) then
          call dswhwarn(6,hwarning)
@@ -374,21 +426,12 @@ c      call dsrdset('dof','1') ! choose GG (150 MeV) dof instead of HP-B default
       write(*,*) '  without coannihilations Oh2 = ',oh2,ierr,iwar
       write(*,*) 'Calculating omega h^2 with coannihilations,',
      &     ' please be patient...'
-      oh2=dsrdomega(1,1,xf,ierr,iwar,nfc)
-      write(*,*) '  with coannihilations Oh2 = ',oh2,ierr,iwar
-      write(*,*) '  Chemical decoupling (freeze-out) occured at'
-      write(*,*) '  T_f = ',mass(kn(1))/xf,' GeV.'
-
-
-c     Now let's calculate the kinetic decoupling, and the smallest halos
-c     we can have for this model.
-      tkd=dsmhtkd(mass(kn(1)),1) ! 1=full calculation
-      write(*,*) ' '
-      write(*,*) 'Kinetic decoupling temperature, Tkd = ',tkd, ' MeV'
-      mcut=dsmhmcut(mass(kn(1)),tkd,1) ! 1 = true cut-off
-      write(*,*) ' The resulting cutoff in the power spectrum'//
-     &   ' corresponds to a mass of',' M_cut/M_sun = ', mcut
-      write(*,*) ' '
+      if(dooh2with.eq.1) then 
+        oh2with=dsrdomega(1,1,xf,ierr,iwar,nfc)
+        write(*,*) '  with coannihilations Oh2 = ',oh2with,ierr,iwar
+      else
+        write(*,*) '  skipwith coannihilations Oh2 = ',-1.,-1,-1
+      endif
 
 c
 c     Now we continue to calculate different direct and indirect
@@ -702,10 +745,7 @@ c
       rtype=3        ! 1=neutrino flux
                      ! 2=neutrino to muon conversion rate
                      ! 3=muon flux
-      ptype=3        ! 1=particles only
-                     ! 2=anti-particles only
-                     ! 3=sum of particle and anti-particle rates
-      call dsntrates(eth,thmax,rtype,ptype,rateea,ratesu,istat)
+      call dsntrates(eth,thmax,rtype,rateea,ratesu,istat)
 
       write(*,*) '  Flux from the Earth = ',rateea,
      &  ' km^-2 yr^-1'
@@ -723,10 +763,7 @@ c      theta=30.0d0   ! angle from center of Earth/Sun, degrees
 c      rtype=3        ! 1=neutrino flux
 c                     ! 2=neutrino to muon conversion rate
 c                     ! 3=muon flux
-c      ptype=3        ! 1=particles only
-c                     ! 2=anti-particles only
-c                     ! 3=sum of particle and anti-particle rates
-c      call dsntdiffrates(energy,theta,rtype,ptype,rateea,ratesu,istat)
+c      call dsntdiffrates(energy,theta,rtype,rateea,ratesu,istat)
 
 c
 c     Muon rates from the halo
@@ -765,18 +802,25 @@ c
       write(*,*) '  0 = no'
       write(*,*) '  1 = yes, with full 6x6 sfermion mixing'
       write(*,*) '  2 = yes, with minimal flavour violation'
-      read(*,*) opt
 
-      if (opt.ne.0) then
-         write(*,*) 'Give SLHA2 file name:'
-         read(5,'(A)') slhaout
-         call dsSLHAwrite(slhaout,opt) 
+      if(modchoice.eq.4) then
+        opt = 1
+        slhaout = 'ATLASout_6x6.slha2'
+        call dsSLHAwrite('ATLASout_6x6.slha2', 1)
+        call dsSLHAwrite('ATLASout.slha2', 2)
+      else 
+        read(*,*) opt
+        if(opt.eq.0) goto 1000
+        write(*,*) 'Give SLHA2 file name:'
+        read(5,'(A)') slhaout
+        call dsSLHAwrite(slhaout,opt) 
       endif
-
+      
 c
 c     end of loop
 c
-      goto 1000
+      if(modchoice.ne.4) goto 1000  ! BKG
+
  2000 continue
       close (10)
         close (30)
@@ -784,6 +828,49 @@ c
 c     Last lines of the main test program.
 c
       write (*,*) 'The DarkSUSY example program is now finished.'
+      write (*,*) '----------------------------------------------'
+
+
+      ! oh2
+      ! oh2with
+      ! gm2amp 
+
+      ! details in log: higgs, 
+      ! details in log: Tevatron, LEP
+
+      !write(*,*) accelbit
+
+      write(*,*) 'Non-format: ',acceptable, unphys, excl
+
+      print 18, acceptable, unphys, excl, oh2, oh2with, gm2amp
+
+ 18   format('ATLAS_res0 | tot: ',I2,' | unphys: ',I2,' | accel: ',I3,
+     & ' | cdm= ',F6.3,1x,F6.3,
+     & ' | (g-2)/2= ',E10.3)
+
+      write(*,*)'sum_excl: ',excl
+      if(btest(excl,0)) write(*,*)'ATLAS_excl: 0  chargino ',mass(kcha1)
+      if(btest(excl,1)) write(*,*)'ATLAS_excl: 1  gluino ',mass(kgluin)
+      if(btest(excl,2)) write(*,*)'ATLAS_excl: 2  squark ',mass(ksqd(1))
+    !     &,mass(ksqu1),mass(ksqu1)
+      if(btest(excl,3)) write(*,*)'ATLAS_excl: 3  slepton '
+      if(btest(excl,4)) write(*,*)'ATLAS_excl: 4  gamma_z(inv) '
+      if(btest(excl,5)) write(*,*)'ATLAS_excl: 5  h2 ',mass(kh2)
+      if(btest(excl,6)) write(*,*)'ATLAS_excl: 6  neutralino ',mass(kn1)
+      if(btest(excl,7)) write(*,*)'ATLAS_excl: 7  b->s+gamma '
+      if(btest(excl,8)) write(*,*)'ATLAS_excl: 8  delta_rho '
+
+      ! shows: dL,sL,b1, dR,sR,b2
+      write(*,*)'TEST sq(d):'
+     &     ,mass(ksqd(1)), mass(ksqd(2)), mass(ksqd(3))
+     &     ,mass(ksqd(4)), mass(ksqd(5)), mass(ksqd(6))
+
+      ! shows: uL,cL,t1, uR,cR,t2
+      write(*,*)'TEST sq(u):'
+     &     ,mass(ksqu(1)), mass(ksqu(2)), mass(ksqu(3))
+     &     ,mass(ksqu(4)), mass(ksqu(5)), mass(ksqu(6))
+
+
 
       stop
       end
@@ -805,8 +892,9 @@ c     src/su/dsgive_model.f that makes the definitions for you.
 c     We here read the model parameters and call that routine.
 
       implicit none
+c      include 'dssusy.h'  ! new
       include 'dsidtag.h'
-      include 'dsmssm.h'
+      include 'dsmssm.h'   ! new
       integer nmodel,lunit,iend,ierr
       real*8 at,ab,mqtild
       integer i
@@ -852,7 +940,8 @@ c
 c     To generate model parameters in a random way
 c
       implicit none
-      include 'dsmssm.h'
+c      include 'dssusy.h'  ! new
+      include 'dsmssm.h'   ! new
       include 'dsidtag.h'
       real*8 dsrndlog,dsrndlin,dsrndsgn
       integer first,n,idum,i
@@ -930,8 +1019,9 @@ c
 c     To write model parameters to unit lunit
 c
       implicit none
+c      include 'dssusy.h'   ! new
       include 'dsidtag.h'
-      include 'dsmssm.h'
+      include 'dsmssm.h'    ! new
       real*8 at,ab,mtop,mqtild
       integer lunit
       integer first

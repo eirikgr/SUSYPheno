@@ -36,7 +36,7 @@ module theo_manip
     call cp_from_g2
    case('hadr','part')
    case default
-    stop'error in subroutine complete_theo (1)' 
+    stop 'error in subroutine complete_theo (1)' 
    end select               
     
   
@@ -62,11 +62,11 @@ module theo_manip
       call XS_from_partR
      case('hadr')
      case default
-      stop'error in subroutine complete_theo (2)'  
+      stop 'error in subroutine complete_theo (2)'  
      end select
    case('onlyL')
    case default       
-    stop'error in subroutine complete_theo (3)'             
+    stop 'error in subroutine complete_theo (3)'             
    end select   
   endif
 
@@ -88,7 +88,7 @@ module theo_manip
   double precision :: Mhi
   !---------------------------------------------
 
-  if(np(Hneut)<1)stop'error in csratios_from_g2  (np(Hneut))'
+  if(np(Hneut)<1)stop 'error in csratios_from_g2  (np(Hneut))'
 
 ! relative contributuion of WW- and ZZ-fusion to VBF (in LO) for
 ! p p-bar collisions at SqrtS=1.96 TeV (calcuated by T. Figy with VBFNLO):s
@@ -144,7 +144,7 @@ module theo_manip
   double precision :: max_hjff_s,max_hjff_p
   !---------------------------------------------
 
-  if(np(Hneut)<1)stop'error in cp_from_g2  (np(Hneut))'
+  if(np(Hneut)<1)stop 'error in cp_from_g2  (np(Hneut))'
 
    do jj=1,ndat
  
@@ -182,7 +182,7 @@ module theo_manip
   double precision :: Mhi,GammaRat
   !---------------------------------------------
 
-  if(np(Hneut)<1)stop'error in br_from_g2 (np(Hneut))'
+  if(np(Hneut)<1)stop 'error in br_from_g2 (np(Hneut))'
 
    do jj=1,ndat
     do i=1,np(Hneut)
@@ -356,7 +356,7 @@ module theo_manip
   double precision :: Mhi
   !----------------------------------------------
   
-  if(np(Hneut)<1)stop'error in subroutine fill_theo_SM (np(Hneut))'
+  if(np(Hneut)<1)stop 'error in subroutine fill_theo_SM (np(Hneut))'
 
    do n=1,ndat        
     if(theo(n)%gooddataset) then             
@@ -452,7 +452,7 @@ module theo_manip
   logical :: simple_partR
   !----------------------------------------------
 
-  if(np(Hneut)<1)stop'error in subroutine XS_from_partR (np(Hneut))'
+  if(np(Hneut)<1)stop 'error in subroutine XS_from_partR (np(Hneut))'
 
     call allocate_hadroncolliderextras_parts(tevS) 
     call allocate_hadroncolliderextras_parts(lhc7S) 

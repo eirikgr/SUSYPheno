@@ -288,7 +288,7 @@ module usefulbits
       if(abs(value-array(i)).le.small) output = 1
     enddo
   else 
-    stop'error: Passing an unallocated array to subroutine iselementofarray!'
+    stop 'error: Passing an unallocated array to subroutine iselementofarray!'
   endif
 
  end subroutine iselementofarray
@@ -298,7 +298,7 @@ module usefulbits
  !**********************************************************
    integer :: x
 
-   if(ubound(np,dim=1).ne.4)stop'error: have made a mistake in subroutine fill_pdesc (1)'
+   if(ubound(np,dim=1).ne.4)stop 'error: have made a mistake in subroutine fill_pdesc (1)'
 
    x=0
    allocate(  pdesc(  ubound(np,dim=1) )  )
@@ -319,7 +319,7 @@ module usefulbits
    pdesc(x)%short='C'
    pdesc(x)%long ='chargino'
 
-   if(x.ne.ubound(np,dim=1))stop'error: have made a mistake in subroutine fill_pdesc (2)'
+   if(x.ne.ubound(np,dim=1))stop 'error: have made a mistake in subroutine fill_pdesc (2)'
 
  end subroutine fill_pdesc
  !**********************************************************            
@@ -344,7 +344,7 @@ module usefulbits
     np_t(x)=1
    else
     write(*,*)'np=',np
-    stop'error in subroutine allocate_dataset_parts (1)'
+    stop 'error in subroutine allocate_dataset_parts (1)'
    endif
   enddo
 
@@ -353,7 +353,7 @@ module usefulbits
   elseif(n_addit.eq.0)then
     n_add=1
   else
-    stop'error in subroutine allocate_dataset_parts (2)'
+    stop 'error in subroutine allocate_dataset_parts (2)'
   endif
 
   do x=lbound(d,dim=1),ubound(d,dim=1)
@@ -515,7 +515,7 @@ module usefulbits
    enddo
   case('onlyL')
   case default
-   stop'error in allocate_dataset_parts (3)'
+   stop 'error in allocate_dataset_parts (3)'
   end select
   deallocate(np_t)
  end subroutine allocate_dataset_parts
@@ -537,7 +537,7 @@ module usefulbits
   elseif(np(Hneut).eq.0)then
     nHiggsneut=1
   else
-    stop'error in subroutine allocate_sqcouplratio_parts (1)'
+    stop 'error in subroutine allocate_sqcouplratio_parts (1)'
   endif
 
   do x=lbound(gsq,dim=1),ubound(gsq,dim=1) 
@@ -617,7 +617,7 @@ module usefulbits
   elseif(np(Hneut).eq.0)then
     nHiggsneut=1
   else
-    stop'error in subroutine allocate_hadroncolliderextras_parts (1)'
+    stop 'error in subroutine allocate_hadroncolliderextras_parts (1)'
   endif
 
   tR%nq_hjWp=2 ! (u dbar), (c sbar)  e.g
@@ -785,7 +785,7 @@ module usefulbits
    enddo 
   case('onlyL')
   case default 
-   stop'error in deallocate_usefulbits'
+   stop 'error in deallocate_usefulbits'
   end select 
   
   deallocate(theo) !allocated in subroutine do_input  

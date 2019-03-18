@@ -272,11 +272,11 @@ module S95tables_type2
 
      do k=lbound(file_id_arr,dim=1),ubound(file_id_arr,dim=1)
        read(file_id_arr(k),*)( testrow(i), i=0,S95_t2(x)%nx1 )
-       if((testrow(0)+100.0D0).gt.small)stop'error in initializetables2 (d)' !top left number should be -100
+       if((testrow(0)+100.0D0).gt.small)stop 'error in initializetables2 (d)' !top left number should be -100
        do i=1,S95_t2(x)%nx1      
          if( abs(testrow(i)- (S95_t2(x)%xmin1 + dble(i-1)*S95_t2(x)%sep1) ).gt.small*S95_t2(x)%sep1 )then
             write(*,*)S95_t2(x)%id,testrow(i),(S95_t2(x)%xmin1 + dble(i-1)*S95_t2(x)%sep1)
-            stop'error in initializetables2 (e)'  
+            stop 'error in initializetables2 (e)'  
          endif
        enddo
      enddo
@@ -285,11 +285,11 @@ module S95tables_type2
      do j=1,S95_t2(x)%nx2  
       read(file_id_2_exp,*) dummy, ( S95_t2(x)%dat(j,i,2), i=1,S95_t2(x)%nx1 )
       if( abs(dummy- (S95_t2(x)%xmin2 + dble(j-1)*S95_t2(x)%sep2) ).gt.small*S95_t2(x)%sep2 ) then
-       stop'error in initializetables2 (f)'
+       stop 'error in initializetables2 (f)'
       endif
       read(file_id_2_obs,*) dummy, ( S95_t2(x)%dat(j,i,1), i=1,S95_t2(x)%nx1 )   
       if( abs(dummy- (S95_t2(x)%xmin2 + dble(j-1)*S95_t2(x)%sep2) ).gt.small*S95_t2(x)%sep2 ) then
-       stop'error in initializetables2 (g)'
+       stop 'error in initializetables2 (g)'
       endif
      end do
    
@@ -335,7 +335,7 @@ module S95tables_type2
    endif
   enddo
 
-  if(n.ne.1)stop'problem in function t2elementnumberfromid 1'
+  if(n.ne.1)stop 'problem in function t2elementnumberfromid 1'
 
  end function t2elementnumberfromid
  !*********************************************************** 
@@ -358,15 +358,15 @@ module S95tables_type2
   n_ftype_selection=ubound(ftype_selection,dim=1)
 
   do n=lbound(ftype_selection,dim=1),n_ftype_selection
-     if(ftype_selection(n).lt.lbound(t2%dat,dim=3))stop'problem in fill_slices_t1_from_slices_of_t2 3a'
-     if(ftype_selection(n).gt.ubound(t2%dat,dim=3))stop'problem in fill_slices_t1_from_slices_of_t2 3b'
+     if(ftype_selection(n).lt.lbound(t2%dat,dim=3))stop 'problem in fill_slices_t1_from_slices_of_t2 3a'
+     if(ftype_selection(n).gt.ubound(t2%dat,dim=3))stop 'problem in fill_slices_t1_from_slices_of_t2 3b'
   enddo
 
   if(lbound(xy_selection,dim=1).ne.lbound(slices_t1,dim=1))then
-     stop'problem in fill_slices_t1_from_slices_of_t2 1a'
+     stop 'problem in fill_slices_t1_from_slices_of_t2 1a'
   endif
   if(ubound(xy_selection,dim=1).ne.ubound(slices_t1,dim=1))then
-     stop'problem in fill_slices_t1_from_slices_of_t2 1b'
+     stop 'problem in fill_slices_t1_from_slices_of_t2 1b'
   endif
 
   select case(v1orv2)
@@ -374,8 +374,8 @@ module S95tables_type2
 
     do n=lbound(slices_t1,dim=1),ubound(slices_t1,dim=1)
 
-     if(xy_selection(n).lt.lbound(t2%dat,dim=1))stop'problem in fill_slices_t1_from_slices_of_t2 4a'
-     if(xy_selection(n).gt.ubound(t2%dat,dim=1))stop'problem in fill_slices_t1_from_slices_of_t2 4b'
+     if(xy_selection(n).lt.lbound(t2%dat,dim=1))stop 'problem in fill_slices_t1_from_slices_of_t2 4a'
+     if(xy_selection(n).gt.ubound(t2%dat,dim=1))stop 'problem in fill_slices_t1_from_slices_of_t2 4b'
 
      slices_t1(n)%id          =  t2%id    
      slices_t1(n)%nx          =  t2%nx1  
@@ -398,8 +398,8 @@ module S95tables_type2
 
     do n=lbound(slices_t1,dim=1),ubound(slices_t1,dim=1)
 
-     if(xy_selection(n).lt.lbound(t2%dat,dim=2))stop'problem in fill_slices_t1_from_slices_of_t2 4aa'
-     if(xy_selection(n).gt.ubound(t2%dat,dim=2))stop'problem in fill_slices_t1_from_slices_of_t2 4bb'
+     if(xy_selection(n).lt.lbound(t2%dat,dim=2))stop 'problem in fill_slices_t1_from_slices_of_t2 4aa'
+     if(xy_selection(n).gt.ubound(t2%dat,dim=2))stop 'problem in fill_slices_t1_from_slices_of_t2 4bb'
 
      slices_t1(n)%id          =  t2%id    
      slices_t1(n)%nx          =  t2%nx2  
@@ -419,7 +419,7 @@ module S95tables_type2
 
     enddo
   case default
-   stop'problem in fill_slices_t1_from_slices_of_t2 5'
+   stop 'problem in fill_slices_t1_from_slices_of_t2 5'
   end select
 
  end subroutine fill_slices_t1_from_slices_of_t2
@@ -445,8 +445,8 @@ module S95tables_type2
   n_ftype_selection=ubound(ftype_selection,dim=1)
 
   do n=lbound(ftype_selection,dim=1),n_ftype_selection
-     if(ftype_selection(n).lt.lbound(t2%dat,dim=3))stop'problem in fill_t1_from_t2 3a'
-     if(ftype_selection(n).gt.ubound(t2%dat,dim=3))stop'problem in fill_t1_from_t2 3b'
+     if(ftype_selection(n).lt.lbound(t2%dat,dim=3))stop 'problem in fill_t1_from_t2 3a'
+     if(ftype_selection(n).gt.ubound(t2%dat,dim=3))stop 'problem in fill_t1_from_t2 3b'
   enddo
 
   t1%id          =  t2%id 
@@ -455,8 +455,8 @@ module S95tables_type2
   select case(v1orv2)
   case(1)
 
-     if(xy_selection.lt.lbound(t2%dat,dim=1))stop'problem in fill_t1_from_t2 4a'
-     if(xy_selection.gt.ubound(t2%dat,dim=1))stop'problem in fill_t1_from_t2 4b'
+     if(xy_selection.lt.lbound(t2%dat,dim=1))stop 'problem in fill_t1_from_t2 4a'
+     if(xy_selection.gt.ubound(t2%dat,dim=1))stop 'problem in fill_t1_from_t2 4b'
   
      t1%nx          =  t2%nx1  
      t1%xmax        =  t2%xmax1 
@@ -474,8 +474,8 @@ module S95tables_type2
 
   case(2)
 
-     if(xy_selection.lt.lbound(t2%dat,dim=2))stop'problem in fill_t1_from_t2 4aa'
-     if(xy_selection.gt.ubound(t2%dat,dim=2))stop'problem in fill_t1_from_t2 4bb'
+     if(xy_selection.lt.lbound(t2%dat,dim=2))stop 'problem in fill_t1_from_t2 4aa'
+     if(xy_selection.gt.ubound(t2%dat,dim=2))stop 'problem in fill_t1_from_t2 4bb'
 
      t1%nx          =  t2%nx2  
      t1%xmax        =  t2%xmax2 
@@ -492,7 +492,7 @@ module S95tables_type2
      enddo
 
   case default
-   stop'problem in fill_t1_from_t2 5'
+   stop 'problem in fill_t1_from_t2 5'
   end select
 
  end subroutine fill_t1_from_t2

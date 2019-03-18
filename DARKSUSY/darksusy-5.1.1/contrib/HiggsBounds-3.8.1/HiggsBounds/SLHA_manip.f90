@@ -81,7 +81,7 @@ module SLHA_manip
   ! write(*,*)'hello block',names_of_blocks_and_decays(i)%id, &
   !  & trim(adjustl(names_of_blocks_and_decays(i)%line))
   !enddo
-  !stop'here for now (subroutine readSLHAfile)'
+  !stop 'here for now (subroutine readSLHAfile)'
 
  end subroutine readSLHAfile
  !********************************************************
@@ -227,7 +227,7 @@ module SLHA_manip
 
        call saferead_int(col(2),particlePDGcode_fromblock)
        if(particlePDGcode.ne.particlePDGcode_fromblock)then
-         stop'problem in function get_particledecaywidth(2)'
+         stop 'problem in function get_particledecaywidth(2)'
        endif
   
        call saferead_dble(col(3),get_totaldecaywidth)
@@ -278,15 +278,15 @@ module SLHA_manip
     call saferead_int(col(7),incISR_fromblock)
 
     if(trim(col(1))           .ne. 'XS'                       )then
-      stop'problem in function get_SPhenocrosssectionCMenergy(1)'
+      stop 'problem in function get_SPhenocrosssectionCMenergy(1)'
     elseif( .not.same_particles(particlePDGcode_req,particlePDGcode_fromblock) )then
-      stop'problem in function get_SPhenocrosssectionCMenergy(2)'
+      stop 'problem in function get_SPhenocrosssectionCMenergy(2)'
     elseif( pol_1             .ne. pol_1_fromblock            )then
-      stop'problem in function get_SPhenocrosssectionCMenergy(4)'
+      stop 'problem in function get_SPhenocrosssectionCMenergy(4)'
     elseif( pol_2             .ne. pol_2_fromblock            )then
-      stop'problem in function get_SPhenocrosssectionCMenergy(5)'
+      stop 'problem in function get_SPhenocrosssectionCMenergy(5)'
     elseif( incISR_fromblock  .ne. incISR_fromblock           )then
-      stop'problem in function get_SPhenocrosssectionCMenergy(6)'
+      stop 'problem in function get_SPhenocrosssectionCMenergy(6)'
     endif
 
     call saferead_dble(col(4),get_SPhenocrosssectionCMenergy)
@@ -872,7 +872,7 @@ module SLHA_manip
    case(2)
     blockname='dcinfo'
    case default
-    stop'error in function is_valid_point'
+    stop 'error in function is_valid_point'
    end select
    blocklines=line_numbers_of_block(blockname)
    if(minval(blocklines).le.0)then
@@ -918,7 +918,7 @@ module SLHA_manip
   ub=ubound(array1,dim=1)
 
   if(ub.ne.ubound(array2,dim=1))then
-   stop'problem in function same_particles'
+   stop 'problem in function same_particles'
   endif
 
   same_particles=.True.
@@ -1005,10 +1005,10 @@ module SLHA_manip
   case('block')
   case('decay')
   case default
-   stop'wrong input to function line_numbers_of_block_or_decay'
+   stop 'wrong input to function line_numbers_of_block_or_decay'
   end select
 
-  if(len(name_of_block).gt.len(name_of_block_lowercase))stop'error in function line_numbers_of_block_or_decay (a)'
+  if(len(name_of_block).gt.len(name_of_block_lowercase))stop 'error in function line_numbers_of_block_or_decay (a)'
 
   line_numbers_of_block_or_decay=0
 
@@ -1066,7 +1066,7 @@ module SLHA_manip
    n = n + 1               
   enddo            
 
-  if(n.eq.0)stop'File is empty'
+  if(n.eq.0)stop 'File is empty'
       
   getSLHAfilelength=n
   rewind(fileid)

@@ -30,7 +30,7 @@ module output
   !-------------------------------------------
 
   if(len(start_of_filename).lt.len(infile1))then
-     stop'problem in subroutine setup_output 2'
+     stop 'problem in subroutine setup_output 2'
   endif
 
   select case(inputmethod)
@@ -43,7 +43,7 @@ module output
    case('SLHA')
     start_of_filename=''
    case default 
-     stop'problem in subroutine setup_output 1'
+     stop 'problem in subroutine setup_output 1'
    end select
    call createKey(start_of_filename)
 
@@ -151,7 +151,7 @@ module output
       endif
      enddo
    else
-    stop'error in subroutine do_output(1)'
+    stop 'error in subroutine do_output(1)'
    endif
  
    format43='(1I14,'
@@ -256,7 +256,7 @@ module output
    close(file_id_common)
    deallocate(Mhall) 
   case default
-   stop'error in subroutine do_output (*2)'    
+   stop 'error in subroutine do_output (*2)'    
   end select
  case('website')               
     do jj=1,ndat 
@@ -267,10 +267,10 @@ module output
     case('SLHA')
        call outputSLHAdata(infile1)
     case default
-       stop'error in subroutine do_output(c)'
+       stop 'error in subroutine do_output(c)'
     end select
  case default
-    stop'error in subroutine do_output (*1)'                                              
+    stop 'error in subroutine do_output (*1)'                                              
  end select  
                                                
  end subroutine do_output

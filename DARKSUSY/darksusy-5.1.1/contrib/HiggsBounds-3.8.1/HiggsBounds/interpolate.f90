@@ -414,9 +414,9 @@ module interpolate
   !-------------------------------------------
 
   if(lbound(interpol_array, dim=1).ne.lbound(ftype_selection, dim=1))then
-    stop'problem in interpolate_tabletype3_longer (a)'
+    stop 'problem in interpolate_tabletype3_longer (a)'
   elseif(ubound(interpol_array, dim=1).ne.lbound(ftype_selection, dim=1))then
-    stop'problem in interpolate_tabletype3_longer (b)'  
+    stop 'problem in interpolate_tabletype3_longer (b)'  
   endif
 
   ! check if mass is within z range of table:
@@ -516,7 +516,7 @@ module interpolate
   c_y   =  -1.0D6
   c_f   =  -1.0D6
 
-  if(size(slices_t2,dim=1).ne.2)stop'wrong input to slices_t2 (1)'
+  if(size(slices_t2,dim=1).ne.2)stop 'wrong input to slices_t2 (1)'
 
   ! check if mass is within z range of table:
 
@@ -643,7 +643,7 @@ module interpolate
     endif
    else ! x1 and x2 are the same point, but x is somewhere else
      write(*,*)'x,x1,x2',x,x1,x2
-     stop'error in function interpol1D' 
+     stop 'error in function interpol1D' 
    endif
 
  end function interpol1D
@@ -688,7 +688,7 @@ module interpolate
    elseif(abs(denom).lt.small)then  
      if(  ((x1-x2)**2.0D0 + (y1-y2)**2.0D0 &
        & + (x1-x3)**2.0D0 + (y1-y3)**2.0D0).lt. small )then ! (x1,y1),(x2,y2),(x3,y3) are in the same place but (x,y) is at a different place
-       stop'error in function interpol2D (case 1d)' 
+       stop 'error in function interpol2D (case 1d)' 
 
      elseif( ((x1-x2)**2.0D0 + (y1-y2)**2.0D0) .lt. small )then ! (x1,y1) and (x2,y2) are the same points
        if( abs((x2-x3)*(y-y3)-(y2-y3)*(x-x3)) .lt.sqrt(small) .or. &
@@ -704,7 +704,7 @@ module interpolate
 
          interpol2D= interpol1D(r,r2,f2,r3,f3)
        else
-         stop'error in function interpol2D (case 2aii)' 
+         stop 'error in function interpol2D (case 2aii)' 
        endif
      elseif( ((x1-x3)**2.0D0 + (y1-y3)**2.0D0) .lt. small )then ! (x1,y1) and (x3,y3) are the same points
        if( abs((x2-x1)*(y-y1)-(y2-y1)*(x-x1)) .lt.sqrt(small) .or. &
@@ -719,7 +719,7 @@ module interpolate
 
          interpol2D= interpol1D(r,r1,f1,r2,f2)
        else
-         stop'error in function interpol2D (case 2bii)' 
+         stop 'error in function interpol2D (case 2bii)' 
        endif
 
      elseif( ((x2-x3)**2.0D0 + (y2-y3)**2.0D0) .lt. small )then ! (x2,y2) and (x3,y3) are the same points
@@ -736,15 +736,15 @@ module interpolate
 
          interpol2D= interpol1D(r,r1,f1,r3,f3)
        else
-         stop'error in function interpol2D (case 2cii)'
+         stop 'error in function interpol2D (case 2cii)'
        endif
 
      elseif( abs((x2-x1)*(y-y1)-(y2-y1)*(x-x1)) .lt.small )then !the points are all in a line, but none are in exactly the same place
          !first, need to work out which 2 points to use
          !then, use interpol1D
-         stop'error: have not implemented this bit yet (case 2d)'
+         stop 'error: have not implemented this bit yet (case 2d)'
      else !(x1,y1),(x2,y2),(x3,y3) are in a line but (x,y) is not in that line
-         stop'error in function interpol2D (case 2e)'
+         stop 'error in function interpol2D (case 2e)'
      endif
    else !case 3
    ! write(*,*)'hello: case 3'
@@ -851,9 +851,9 @@ module interpolate
    !------------------------------------------- 
 
    if(    (lbound(f1,dim=1).ne.1) .or. (lbound(f2,dim=1).ne.1) .or. (lbound(f3,dim=1).ne.1) )then
-     stop'problem in function interpol3D (1)'
+     stop 'problem in function interpol3D (1)'
    elseif((ubound(f1,dim=1).ne.2) .or. (ubound(f2,dim=1).ne.2) .or. (ubound(f3,dim=1).ne.2) )then  
-     stop'problem in function interpol3D (2)'      
+     stop 'problem in function interpol3D (2)'      
    endif
 
    f1mid = interpol1D(z,z1(1),f1(1),z1(2),f1(2))
@@ -893,7 +893,7 @@ module interpolate
   double precision,allocatable :: dat(:)
   !-------------------------------------------        
 
-  if(size(m_interpol,dim=1).ne.n_points_max)stop'wrong input to interpolate_1D_inv 1'
+  if(size(m_interpol,dim=1).ne.n_points_max)stop 'wrong input to interpolate_1D_inv 1'
 
  !table 1
  !fact=   1.2001890350471742     
@@ -912,10 +912,10 @@ module interpolate
    m_interpol= - 4.0D0
   elseif(m_in.gt.t1%xmax)then !m_in should also be in table
    m_interpol= - 4.0D0
-   stop'wrong input to interpolate_1D_inv a' 
+   stop 'wrong input to interpolate_1D_inv a' 
   elseif(m_in.lt.t1%xmin)then
    m_interpol= - 4.0D0
-   stop'wrong input to interpolate_1D_inv b'
+   stop 'wrong input to interpolate_1D_inv b'
 
   else
    do i=1,t1%nx-1 ! the case where targt is exactly on last data point is dealt with separately below
@@ -993,11 +993,11 @@ module interpolate
   integer :: c_xint(3),c_yint(3)
   !-------------------------------------------        
 
-  if(ubound(t2%dat,dim=1).ne.ubound(relevent_points,dim=1))stop'wrong input to mask_for_2D_inv 1'
-  if(ubound(t2%dat,dim=2).ne.ubound(relevent_points,dim=2))stop'wrong input to mask_for_2D_inv 2'
+  if(ubound(t2%dat,dim=1).ne.ubound(relevent_points,dim=1))stop 'wrong input to mask_for_2D_inv 1'
+  if(ubound(t2%dat,dim=2).ne.ubound(relevent_points,dim=2))stop 'wrong input to mask_for_2D_inv 2'
 
-  if(lbound(relevent_points,dim=1).ne.1)stop'wrong input to mask_for_2D_inv 3'
-  if(lbound(relevent_points,dim=2).ne.1)stop'wrong input to mask_for_2D_inv 4'
+  if(lbound(relevent_points,dim=1).ne.1)stop 'wrong input to mask_for_2D_inv 3'
+  if(lbound(relevent_points,dim=2).ne.1)stop 'wrong input to mask_for_2D_inv 4'
 
   relevent_points = 0
 

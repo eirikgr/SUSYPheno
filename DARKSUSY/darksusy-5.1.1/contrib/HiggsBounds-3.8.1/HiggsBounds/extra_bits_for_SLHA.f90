@@ -52,22 +52,22 @@ module extra_bits_for_SLHA
   !-------------------------------------------              
  
   if((np(Hneut).lt.0).or.(np(Hneut).gt.5))then
-    stop'can not use subroutine getSLHAdata if number of neutral Higgs is not in range 0:5'
+    stop 'can not use subroutine getSLHAdata if number of neutral Higgs is not in range 0:5'
   endif
   if((np(Hplus).lt.0).or.(np(Hplus).gt.1))then
-    stop'can not use subroutine getSLHAdata if number of charged Higgs is not in range 0:1'
+    stop 'can not use subroutine getSLHAdata if number of charged Higgs is not in range 0:1'
   endif
   if((np(Chineut).lt.0).or.(np(Chineut).gt.5))then
-    stop'can not use subroutine getSLHAdata if number of neutralinos is not in range 0:5'
+    stop 'can not use subroutine getSLHAdata if number of neutralinos is not in range 0:5'
   endif
   if((np(Chiplus).lt.0).or.(np(Chiplus).gt.2))then
-    stop'can not use subroutine getSLHAdata if number of charginos is not in range 0:2'
+    stop 'can not use subroutine getSLHAdata if number of charginos is not in range 0:2'
   endif
 
   open(file_id_common,file=trim(infile),status='old',action='read',iostat=ios) 
   if(ios.ne.0)then 
    write(*,*)'problem opening the SLHA file: $'//trim(adjustl(infile))//'$'
-   !stop'problem opening SLHA input file'
+   !stop 'problem opening SLHA input file'
   else
 
    call readSLHAfile(file_id_common)
@@ -79,7 +79,7 @@ module extra_bits_for_SLHA
     Rparityviolation =get_modsel(4)
     CPviolation      =get_modsel(5)
 
-    if(Rparityviolation.ne.0)stop'HB can not yet use SLHA files with R parity violation'
+    if(Rparityviolation.ne.0)stop 'HB can not yet use SLHA files with R parity violation'
 
     select case(particlecontent)
     case(0)

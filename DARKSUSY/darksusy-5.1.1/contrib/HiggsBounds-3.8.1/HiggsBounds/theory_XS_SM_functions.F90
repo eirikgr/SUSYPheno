@@ -71,7 +71,7 @@ module theory_XS_SM_functions
        rangeok=.False.
       endif
      case default 
-        stop'problem in subroutine check_range'
+        stop 'problem in subroutine check_range'
      end select
   endif 
 
@@ -313,7 +313,7 @@ module theory_XS_SM_functions
 
   call check_range('TEV ',x,rangeok,badvalue,strict)
   if((x.lt.100.0D0).or.(x.gt.200.0D0))then
-   !stop'function XS_gg_H_SM_9713: need to check validity at this MH'
+   !stop 'function XS_gg_H_SM_9713: need to check validity at this MH'
    write(*,*)'WARNING: function XS_tev_gg_H_SM_9713: need to check validity at this MH'
   endif
 
@@ -347,7 +347,7 @@ module theory_XS_SM_functions
 
   call check_range('TEV ',x,rangeok,badvalue,strict)
   if((x.lt.100.0D0).or.(x.gt.200.0D0))then
-   !stop'function XS_gg_H_SM_9674: need to check validity at this MH'
+   !stop 'function XS_gg_H_SM_9674: need to check validity at this MH'
    write(*,*)'WARNING: function XS_gg_H_SM_9674: need to check validity at this MH'
   endif
 

@@ -11,10 +11,10 @@ contains
     integer :: strcapZ = 90    ! etc
     !integer :: strlowa = 97
     !integer :: strlowz = 122
+    integer :: i,n,ich
     integer :: casediff = 32   ! = 97-65  = 122-90
     character(len=n) :: strtolcase
     character(len=n) :: str
-    integer :: i,n,ich
     !-----------------------
 
     strtolcase = str
@@ -30,9 +30,9 @@ contains
  function remove_from_character_onwards(string_in,n,charact)
  !********************************************************
   implicit none
+  integer,intent(in) :: n
   character(len=n),intent(in)::string_in
   character(len=n) ::remove_from_character_onwards
-  integer,intent(in) :: n
   integer :: position_of_charact
   character(len=1) :: charact
 
@@ -50,9 +50,9 @@ contains
  function remove_from_character_backwards(string_in,n,charact)
  !********************************************************
   implicit none
+  integer,intent(in) :: n
   character(len=n),intent(in)::string_in
   character(len=n) ::remove_from_character_backwards
-  integer,intent(in) :: n
   integer :: position_of_charact
   character(len=1) :: charact
 
@@ -71,9 +71,9 @@ contains
  function strip_off_comment(string_in,n)
  !********************************************************
   implicit none
+  integer,intent(in) :: n
   character(len=n),intent(in)::string_in
   character(len=n) ::strip_off_comment
-  integer,intent(in) :: n
 
   strip_off_comment=remove_from_character_onwards(string_in,n,'#')
 
@@ -86,12 +86,12 @@ contains
  !if there are m columns and m<n, columns(m+1)...columns(n) will be empty 
  !********************************************************
   implicit none
+  integer,intent(in) :: len_str,len_columns
+  integer :: n,i,position_of_first_space
   character(len=len_str),intent(in) :: str
   character(len=len_str) :: temp_line,bit_of_line
   character(len=len_columns) :: columns(:)
-  integer,intent(in) :: len_str,len_columns
-  integer :: n,i,position_of_first_space
-
+  
   columns=''
   n=size(columns,dim=1) 
  
@@ -107,7 +107,7 @@ contains
       bit_of_line= temp_line(:position_of_first_space-1)
 
       !if(len(trim(bit_of_line)).gt.len_columns)then
-      ! stop'string columns is not big enough'
+      ! stop 'string columns is not big enough'
       !endif
 
       columns(i)=bit_of_line
@@ -117,7 +117,7 @@ contains
   enddo
 
   !if(trim(temp_line).ne.'')then
-  !  stop'there is still something left in line'
+  !  stop 'there is still something left in line'
   !endif
 
  end subroutine split_into_col

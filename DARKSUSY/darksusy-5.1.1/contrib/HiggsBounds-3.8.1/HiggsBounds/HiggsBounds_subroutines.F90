@@ -156,7 +156,7 @@ subroutine attempting_to_use_an_old_HB_version(subroutineid)
   write(*,*)'The subroutine run_HiggsBounds_'//subroutineid//' has been discontinued in this'
   write(*,*)'version of HiggsBounds.'
  case default
-  stop'wrong input to subroutine attempting_to_use_an_old_HB_version'
+  stop 'wrong input to subroutine attempting_to_use_an_old_HB_version'
  end select
 
  write(*,*)'If you have code written for use with HB 1.*.*, you have two choices:'
@@ -172,7 +172,7 @@ subroutine attempting_to_use_an_old_HB_version(subroutineid)
  write(*,*)'     generally the most useful when constraining new physics models.'
  write(*,*)'     We will continue to support this code.'
 
- stop'Incorrect call to a HiggsBounds subroutine.'
+ stop 'Incorrect call to a HiggsBounds subroutine.'
 
 end subroutine attempting_to_use_an_old_HB_version
 !************************************************************      
@@ -606,7 +606,7 @@ subroutine SUSYBounds_neutralinoonly_input(MN,GammaTotal_N, &
  if(np(Chineut).eq.0)then
    write(*,*)'subroutine SUSYBounds_neutralinoonly_input should'
    write(*,*)'only be called if np(Chineut)>0'
-   stop'error in SUSYBounds_neutralinoonly_input'
+   stop 'error in SUSYBounds_neutralinoonly_input'
  endif
 
  theo(n)%particle(Chineut)%M       = MN
@@ -718,7 +718,7 @@ subroutine run_HiggsBounds( HBresult,chan,                      &
        write(*,*)'subroutine '//trim(adjustl(inputsub(i)%desc))
        write(*,*)'should be called once and only once before each call to'
        write(*,*)'subroutine run_HiggsBounds.'
-       stop'error in subroutine run_HiggsBounds'
+       stop 'error in subroutine run_HiggsBounds'
    endif
    inputsub(i)%stat=0!now we have used this input, set back to zero
  enddo
@@ -747,14 +747,14 @@ use usefulbits, only : whichinput,just_after_run
 use output, only : do_output
 
   if(.not.just_after_run)then
-   stop'subroutine run_HiggsBounds should be called before subroutine HiggsBounds_SLHA_output' 
+   stop 'subroutine run_HiggsBounds should be called before subroutine HiggsBounds_SLHA_output' 
   endif  
 
   select case(whichinput)
   case('SLHA')
     call do_output
   case default
-    stop'The subroutine HiggsBounds_SLHA_output should only be used when whichinput=SLHA'
+    stop 'The subroutine HiggsBounds_SLHA_output should only be used when whichinput=SLHA'
   end select
 
 end subroutine HiggsBounds_SLHA_output
@@ -781,7 +781,7 @@ subroutine initialize_HiggsBounds_chisqtables
  call readclsbfiles_binary
 
  if(allocated(allocate_if_stats_required))then
-   stop'error in subroutine initialize_HiggsBounds_chisqtables'
+   stop 'error in subroutine initialize_HiggsBounds_chisqtables'
  else
    allocate(allocate_if_stats_required(1))
  endif
@@ -871,7 +871,7 @@ subroutine HB_calc_stats(theory_uncertainty_1s,chisq_withouttheory,chisq_withthe
 
    else
      write(*,*)'hello y=',y
-     stop'problem here with y'
+     stop 'problem here with y'
    endif
 
   else

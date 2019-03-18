@@ -86,7 +86,7 @@ module S95tables_type1
    endif
   enddo
 
-  if(n.ne.1)stop'problem in function t3elementnumberfromid 1'
+  if(n.ne.1)stop 'problem in function t3elementnumberfromid 1'
 
  end function t1elementnumberfromid
 
@@ -3530,7 +3530,7 @@ module S95tables_type1
 
   ! checks we've filled the whole array
   if(x.ne.xend)then
-   stop'error in initializetables1 (a)'
+   stop 'error in initializetables1 (a)'
   endif 
  
   ! do loop to read in S95 tables 

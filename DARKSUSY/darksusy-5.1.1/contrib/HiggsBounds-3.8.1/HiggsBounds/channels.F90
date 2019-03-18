@@ -67,7 +67,7 @@ module channels
      case('TEV','LHC7')
       req= 0 * req
      case default
-      stop'error in error in setup_channels (1)'
+      stop 'error in error in setup_channels (1)'
      end select
    case('onlyH')
      select case(WhichColliderString(expt))
@@ -76,14 +76,14 @@ module channels
      case('LEP')
       req= 0 * req
      case default
-      stop'error in error in setup_channels (2)'
+      stop 'error in error in setup_channels (2)'
      end select
    case('LandH')
      select case(WhichColliderString(expt))
      case('LEP','TEV','LHC7')
       req= 1 * req
      case default
-      stop'error in error in setup_channels (3)'
+      stop 'error in error in setup_channels (3)'
      end select
    case('onlyP')
      if(pub)then
@@ -103,7 +103,7 @@ module channels
       endif
      enddo
    case default 
-    stop'error in setup_channels (A)'
+    stop 'error in setup_channels (A)'
    end select            
 
    l_analyses(i)%req=req
@@ -117,7 +117,7 @@ module channels
    case('TEV','LHC7')
      l_analyses(i)%in_first_set=.False.
    case default
-      stop'error in error in setup_channels (a)'
+      stop 'error in error in setup_channels (a)'
    end select
  
   enddo
@@ -217,7 +217,7 @@ module channels
    ! compare with fact(mlratio) with experimental S95 value
    count_clsb=0        
    do ii=1,rep       
-    if(count_clsb.gt.0)stop'should not occur. To generalise, use a pointer.' ! should also not use 'full' after a 'clsb'
+    if(count_clsb.gt.0)stop 'should not occur. To generalise, use a pointer.' ! should also not use 'full' after a 'clsb'
     select case(r%channelselection(ii))
     case('full')
        ! do nothing        
@@ -231,7 +231,7 @@ module channels
       enddo 
       count_clsb=count_clsb+1
     case default
-       stop'problem in subroutine check_channels'
+       stop 'problem in subroutine check_channels'
     end select
 
     mlratio=maxloc(predratio,dim=1)
@@ -317,7 +317,7 @@ module channels
      !elseif(np(Hneut).ge.1)then
      !  write(n,'(" * Mhplus:",1E16.7)')t%particle(Hplus)%M(1)
      else
-       !stop'error in subroutine print_stuff_for_debugging B'
+       !stop 'error in subroutine print_stuff_for_debugging B'
      endif
 
      ! write(n,*)'********************' 
@@ -376,7 +376,7 @@ module channels
     !write(*,'(1I6,2E12.3)')maxloc(predratio,dim=1),maxval(predratio,dim=1),r%obsratio(1)
     !write(*,*)'********************'
     
-    !stop'just debugging at the moment'
+    !stop 'just debugging at the moment'
 
   end subroutine print_stuff_for_debugging
   !******************************************
@@ -419,7 +419,7 @@ module channels
     case(2)
      add_this_analysis_now =.not.l_analyses(x)%in_first_set
     case default
-     stop'error in subroutine fill_pr (a)'
+     stop 'error in subroutine fill_pr (a)'
     end select
  
     if(add_this_analysis_now)then
@@ -452,19 +452,19 @@ module channels
          enddo 
         enddo 
        case default
-        stop'error in subroutine fill_pr (3)'
+        stop 'error in subroutine fill_pr (3)'
        end select
          
       case(0)
        !leave analyses out
       case default
-       stop'error in subroutine fill_pr (1)'
+       stop 'error in subroutine fill_pr (1)'
       end select
     endif
    enddo
   enddo  
 
-  if(n.ne.ntot)stop'error in subroutine fill_pr (2)'
+  if(n.ne.ntot)stop 'error in subroutine fill_pr (2)'
 
   if(allocated(allocate_if_stats_required))then
    do n=1,ntot
@@ -551,7 +551,7 @@ module channels
   enddo
   close(n)
   
-  stop'subroutine check_tables should only be used when debugging'
+  stop 'subroutine check_tables should only be used when debugging'
 
  end subroutine check_tables
  !************************************************************

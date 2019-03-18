@@ -56,7 +56,7 @@ module theory_BRfunctions
   
   ! checks we've filled the whole array
   if(x.ne.xend)then
-   stop'error in setup_BRSM (a)'
+   stop 'error in setup_BRSM (a)'
   endif 
  
   col=7
