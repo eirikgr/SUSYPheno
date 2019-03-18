@@ -1376,7 +1376,7 @@ def GetLinuxDist():
             #return dist
 
     else:
-        print 'ERROR  GetLinuxDist  Distribution not recognised: %s     (Need to add to GetLinuxDist())   [Returning dist=%s] ' %(distT, dist)
+        print 'INFO  GetLinuxDist  Distribution not recognised: %s     (Need to add to GetLinuxDist())   [Returning dist=%s] ' %(distT, dist)
         #return dist
         
     return dist
