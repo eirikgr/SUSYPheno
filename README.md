@@ -188,33 +188,44 @@ With this default setup you can start investigating how output depends on input 
 
 #### STUDY 1: 
 
-Some relations are very straightforward. E.g. input eR controls the output mass of the right-handed selectron. 
+Some relations are very straightforward. E.g. input eR controls the output mass of the right-handed selectron.
+
 1.1 CHECK IF THIS IS THE CASE:
 ```
 signalgrid_loop.py  -fnadd _ex1  -mssmloop eR=3000,300
 cat susy_ex1_eR_300*masses.tlt | lineup_removeduplicates.sh   # you don't need to plot, just study the table
 ```
-1.2 Whatever is true for the first generation of sleptons/squarks, should also be true for the second. CHECK IF THAT IS THE CASE (CHECK mR). 
-1.3 For lefthanded sleptons it is slightly more complicated. CHECK WHAT MASSES ARE AFFECTED WHEN YOU CHANGE L1. 
+1.2 Whatever is true for the first generation of sleptons/squarks, should also be true for the second. CHECK IF THAT IS THE CASE (CHECK mR).
+
+1.3 For lefthanded sleptons it is slightly more complicated. CHECK WHAT MASSES ARE AFFECTED WHEN YOU CHANGE L1.
+
 1.4 THEN TRY L3.
+
 1.5 THEN ALSO TRY TR (TOGETHER WITH L3).
-1.6 WHICH SPARTICLES ARE CONTROLLED BY M3? 
+
+1.6 WHICH SPARTICLES ARE CONTROLLED BY M3?
+
 1.7 TRY CHANGING At AND CHECK THE EFFECT ON THE MASS OF THE LIGHTEST HIGGS, mh
+
 1.8 HOW DID THE CHANGES ABOVE AFFECT THE DARK MATTER? (Check OmegaVSexp (what is this variable?) in susy_ex1*susyhit_MO_mini.tlt)
+
 1.9 TRY CHANGING M1 AND SEE IF THAT AFFECTS DARK MATTER. (AND HOW DOES IT AFFECT THE MASS OF N1?)
+
 1.10 TRY CHANGING M2 AND mu AND SEE HOW THAT AFFECTS THE CHARGINOS. ARE ANY OTHER QUANTITIES AFFECTED? 
 
 #### STUDY 2: Neutralino sector
 The neutralino is governed mainly by 3 parameters, M1, M2, mu 
 (TB is also relevant, but can be neglected in a first approximation). 
 These three input parameters control four netralinos. 
-M1: bino-part, M2: wino-part, mu: higgsino-part. 
+**M1**: bino-part, **M2**: wino-part, **mu**: higgsino-part. 
 The neutralinos are in general linear combinations of the bino, wino and higgsino. 
 In scenarios with considerable difference between some of M1, M2, mu we will have 
 cases where a given neutralino can be e.g. very nearly pure bino. 
-In the default setup of signalgrid_loop.py, this is roughly the case.
+In the default setup of *signalgrid_loop.py*, this is roughly the case.
 
-2.1 WHICH NEUTRALINOS ARE (MOSTLY) DETERMINED BY WHICH OF M1, M2 and mu? 
+2.1 WHICH NEUTRALINOS ARE (MOSTLY) DETERMINED BY WHICH OF M1, M2 and mu?
+
 2.2 DO VARIOUS USEFUL SCANS IN THE THREE VARIABLES AND TRY TO UNDERSTAND & DESCRIBE HOW THE NEUTRALINO SECTOR WORKS (HOW THE NEUTRALINO MASSES ARE GIVEN BY M1,M2,mu)
+
 2.3 STUDY DARK MATTER AS FUNCTION OF M1,M2,mu  
 
