@@ -19,6 +19,7 @@ cd SUSYPheno
 source install.sh
 ```
 ## Every time you start a new terminal
+It is important to add the environment variable *SUSYPHENO_PATH* pointing to the location of the clone of the SUSYPheno directory above. To do so issue the following two commands in the *SUSYPheno* directory: 
 ```
 export SUSYPHENO_PATH=$PWD
 export PATH=$PATH:$SUSYPHENO_PATH/bin

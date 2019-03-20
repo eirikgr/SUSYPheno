@@ -15,4 +15,5 @@ make
 make install
 cd $SUSYPHENO_PATH
 mkdir $SUSYPHENO_PATH/MICROMEGA/micromegas_3.5.5/MSSM/work/so_generated/
+export PATH=$PATH:$SUSYPHENO_PATH/bin
 
