@@ -1370,7 +1370,8 @@ def GetLinuxDist():
     if distT[0] in ['redhat','Red Hat Enterprise Linux Workstation']   or 'Red Hat' in distT[0]:
         if   5 <= ver < 6: dist = 'RHEL5' 
         elif 6 <= ver < 7: dist = 'RHEL6'  # 2014-08 
-        elif 7 <= ver < 8: dist = 'RHEL7' 
+        elif 7 <= ver < 8: dist = 'RHEL7'
+        elif 8 <= ver < 9: dist = 'RHEL8' 
         else:
             print 'ERROR  GetLinuxDist  Version not recognised: %s  [Returning dist=%s]' %(distT, dist)
             #return dist
